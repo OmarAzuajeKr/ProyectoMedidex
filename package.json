@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-community/voice": "^1.1.9",
     "@react-native-masked-view/masked-view": "0.3.0",
     "@react-navigation/drawer": "^6.6.11",
     "@react-navigation/stack": "^6.3.25",

@@ -1,4 +1,4 @@
-export interface Medicinas {
+export interface Pokemon {
     id: number;
     name: string;
     types: string[];
@@ -18,7 +18,7 @@ value: number;
 
 }
 
-export interface MedicinasDetail {
+export interface PokemonDetail {
     id: number;
     name: string;
     types: string[];

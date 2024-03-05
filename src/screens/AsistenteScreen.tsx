@@ -1,12 +1,41 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Button, Image, TouchableOpacity } from 'react-native'
+import { StackScreenProps } from '@react-navigation/stack'
+import { styles } from '../themes/AppThemes'
 
-export const AsistenteScreen = () => {
+
+interface Props extends StackScreenProps<any, any> {}
+
+export const AsistenteScreen = ({navigation}:Props) => {
   return (
- <View>
-    <Text>
-        Hola Asistente
+ <View style={styles.globalMargin}>
+    <Text style={styles.title2}>
+        Bienvenido a nuestro asistente Virtual!
     </Text>
+    <Text style={styles.title3}>
+      Te presentamos a Mediscul, nuestro asistente virtual quien te asistira en todas tus necesides
+    </Text>
+    <View style={{
+        alignItems: 'center',
+        marginTop: 20
+    }}>
+    <Image
+    source={require('../Assets2/mascota.png')}
+    style={styles.avatar}
+/>
+</View>
+<TouchableOpacity 
+    style={styles.boton2}
+    onPress={() => {navigation.navigate('ChatAsistenteScreen')
+    }}
+>
+    <Text style={{
+        fontSize: 20,
+        color: 'white'
+    }}>
+        Comenzar
+    </Text>
+</TouchableOpacity>
  </View>
   )
 }

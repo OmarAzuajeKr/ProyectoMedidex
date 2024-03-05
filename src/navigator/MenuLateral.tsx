@@ -4,7 +4,8 @@ import { PerfilScreen } from '../screens/PerfilScreen';
 import { StackNavigator } from './StackNavigator';
 import { AsistenteScreen } from '../screens/AsistenteScreen';
 import { ConfiguracionScreen } from '../screens/ConfiguracionScreen';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
+import { StackNavigatorAsistente } from './StackNavigatorAsistente';
 
 const Drawer = createDrawerNavigator();
 
@@ -38,8 +39,9 @@ drawerContent={(props) => <CustomDrawerContent {...props}/>}
     >
       <Drawer.Screen name="Inicio" component={StackNavigator} />
       <Drawer.Screen name="Perfil" component={PerfilScreen} />
-      <Drawer.Screen name="Asistente" component={AsistenteScreen} />
+      <Drawer.Screen name="Asistente" component={StackNavigatorAsistente} />
       <Drawer.Screen name="Configuracion" component={ConfiguracionScreen} />
+      
     </Drawer.Navigator>
   );
 }

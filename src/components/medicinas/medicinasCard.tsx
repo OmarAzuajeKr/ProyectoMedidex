@@ -1,14 +1,18 @@
 import React from 'react'
 import { View, StyleSheet, Image, Pressable} from 'react-native';
-//import { Pokemon } from '../../domain/entities/pokemon'
+import { Pokemon } from '../../domain/entities/medicinas'
 import { Card, Text } from 'react-native-paper'
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParams } from '../../navigator/StackNavigator';
+
 //import { styles } from '../../themes/appThemes';
 
 
+interface Props {
+    pokemon: Pokemon
+}
 
-export const MedicinaCard = () => {
+export const PokemonCard = ({pokemon}:Props) => {
 
 const navigation= useNavigation<NavigationProp<RootStackParams>>();
 
@@ -18,25 +22,28 @@ const navigation= useNavigation<NavigationProp<RootStackParams>>();
 <Pressable
 style={{flex:1}}
 onPress={
-  () => navigation.navigate('MedicinasScreen')
+  () => navigation.navigate('MedicinasScreen',{PokemonId:pokemon.id})
 }
 >
-<Card>
-   
+<Card style={[styles.cardContainer,]}>
+    <Text style={styles.name} variant='bodyLarge' lineBreakMode='middle'>
+        {pokemon.name}
+        {'\n#' + pokemon.id}
+    </Text>
 
 {/* Imagen de la pokebola*/}
 
-   {/* <View style={styles.pokeballContainer}>
-    <Image source={require('../../assets/pokebola-blanca.png')} style={styles.pokeball} />        
+    <View style={styles.pokeballContainer}>
+    <Image source={require('../../Assets2/PastillaBlanca.png')} style={styles.pokeball} />        
     </View>
 
 {/*Imagen del Pokemon*/}
 
-    {/*<Image source={{uri: pokemon.avatar}} 
+    <Image source={{uri: pokemon.avatar}} 
           style={styles.pokemonImage} />
 
 {/* Tipos */}
-{/*<Text style={[styles.name, {marginTop:35}]}>{pokemon.types[0]} </Text>*/}
+<Text style={[styles.name, {marginTop:35}]}>{pokemon.types[0]} </Text>
 
 </Card>
 </Pressable>
@@ -67,10 +74,10 @@ const styles = StyleSheet.create({
       left: 10,
     },
     pokeball: {
-      width: 100,
-      height: 100,
-      right: -25,
-      top: -25,
+      width: 300,
+      height: 300,
+      right: -100,
+      top: -100,
       opacity: 0.4,
     },
     pokemonImage: {
