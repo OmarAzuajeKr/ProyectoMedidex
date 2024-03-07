@@ -1,8 +1,8 @@
 
 
 import React from 'react'
-import { Image, View , FlatList} from 'react-native'
-import { ActivityIndicator, Button, Text, Props } from 'react-native-paper';
+import { Image, View , FlatList,} from 'react-native'
+import { ActivityIndicator, Button, Text} from 'react-native-paper';
 import { useQuery,useInfiniteQuery } from '@tanstack/react-query';
 import { getPokemons } from '../actions/medicinas/get-medicinas';
 import { PastillaBG } from '../components/ui/pastillaBG';
@@ -11,11 +11,15 @@ import { Pokemon } from '../domain/entities/medicinas';
 import { globalTheme } from '../themes/globalTheme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PokemonCard } from '../components/medicinas/medicinasCard';
-import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
-//import { styles } from '../themes/appThemes';
+import { FAB } from 'react-native-paper';
+import { globalStyles } from '../themes/AppThemes';
+import { RootStackParams } from '../navigator/StackNavigator';
+import { StackScreenProps } from '@react-navigation/stack';
 
 
-export const HomeScreen = () => {
+interface Props extends StackScreenProps<RootStackParams, 'HomeScreen'> {}
+
+export const HomeScreen = ({navigation}: Props) => {
 
   const {top} = useSafeAreaInsets();
 
@@ -53,6 +57,21 @@ const {isLoading, data, fetchNextPage} = useInfiniteQuery({
   onEndReached={()=> fetchNextPage()}
   showsVerticalScrollIndicator={false}
  />
+
+
+
+
+<FAB
+label='Buscar'
+style={globalStyles.Fab}
+mode='elevated'
+color='white'
+icon='magnify'
+onPress={()=>{navigation.push('SearchScreen')}}
+/>
+
+
+
     </View>
   )
 }

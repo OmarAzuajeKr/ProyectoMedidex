@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { View , Text, Image, Button, TouchableOpacity} from 'react-native'
-import { styles } from '../themes/AppThemes'
+import { globalStyles } from '../themes/AppThemes'
 import { Features } from '../components/asistente/features'
 import { StackScreenProps } from '@react-navigation/stack'
 import { dummyMessage } from '../actions'
@@ -73,20 +73,20 @@ const speechEndHandler = (e: any) => {
 
   return (
     <View>
-      <View style={styles.avatarContainer}>
+      <View style={globalStyles.avatarContainer}>
       <Image
     source={require('../Assets2/mascota.png')}
-    style={styles.avatar}/>
+    style={globalStyles.avatar}/>
     </View>
 
 {/*Mensajes*/}
 {
   messages.length>0?(
-    <View style={styles.containerMensajes}>
-      <Text style={styles.titleX}>
+    <View style={globalStyles.containerMensajes}>
+      <Text style={globalStyles.titleX}>
         Asistente
       </Text>
-      <View style={styles.containerCompleto}>
+      <View style={globalStyles.containerCompleto}>
         <ScrollView>
         {
   messages.map((message, index) => {
@@ -94,10 +94,10 @@ const speechEndHandler = (e: any) => {
       if (message.content.includes('https')) {
         return(
           <View key={index}>
-        <View style={styles.containerMensajes3}>
+        <View style={globalStyles.containerMensajes3}>
           <Image
           source={{uri: message.content}}
-          style={styles.avatar}
+          style={globalStyles.avatar}
           />
 
         </View>
@@ -106,8 +106,8 @@ const speechEndHandler = (e: any) => {
       } else {
         // Y aquí también
         return(
-          <View key={index} style={styles.containerMensajes3}>
-              <Text style={styles.subtitle}>
+          <View key={index} style={globalStyles.containerMensajes3}>
+              <Text style={globalStyles.subtitle}>
                 {message.content}
              </Text>
          </View>
@@ -115,9 +115,9 @@ const speechEndHandler = (e: any) => {
       }
     } else {        
       return (
-        <View key={index} style={styles.containerMensajes}>
-            <View style={styles.containerMensajes2}>
-                <Text style={styles.subtitle}>
+        <View key={index} style={globalStyles.containerMensajes}>
+            <View style={globalStyles.containerMensajes2}>
+                <Text style={globalStyles.subtitle}>
                   {message.content}
                </Text>
            </View>
@@ -136,14 +136,14 @@ const speechEndHandler = (e: any) => {
   )
 }
 {/*Buttoms*/}
-<View style={styles.IconContainer}>
+<View style={globalStyles.IconContainer}>
   {
     recording?(
       <TouchableOpacity onPress={stopRecording}>
         {/*Grabacion*/}
   <Image
     source={require('../Assets2/MicrofonoBlanco.png')}
-    style={styles.Icon}
+    style={globalStyles.Icon}
     />
     
   </TouchableOpacity>
@@ -152,7 +152,7 @@ const speechEndHandler = (e: any) => {
   {/*Inicio de la grabacion*/}
   <Image
     source={require('../Assets2/Microfono.png')}
-    style={styles.Icon}
+    style={globalStyles.Icon}
     />
     
   </TouchableOpacity>
@@ -163,7 +163,7 @@ const speechEndHandler = (e: any) => {
       <TouchableOpacity 
       onPress={clear}
       >
-<Text style={styles.subtitle}>
+<Text style={globalStyles.subtitle}>
   Clear
 </Text>
       </TouchableOpacity>
@@ -174,7 +174,7 @@ const speechEndHandler = (e: any) => {
       <TouchableOpacity 
       onPress={stopSpeaking}
       >
-<Text style={styles.subtitle}>
+<Text style={globalStyles.subtitle}>
   Stop
 </Text>
       </TouchableOpacity>

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+export const globalStyles = StyleSheet.create({
 
     globalMargin: {
         marginHorizontal: 20,
@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
         marginTop: 20,
         backgroundColor: '#c1121f',
         padding: 10,
-        borderRadius: 10
+        borderRadius: 30
     },
     respuestas:{
         height:60,
@@ -105,6 +105,7 @@ padding: 10,
     Texto:{
         fontSize: 15,
         fontStyle: 'italic',
+        color: 'white',
     },
     containerCompleto: {
         justifyContent: 'center', 
@@ -173,5 +174,11 @@ padding: 10,
         alignItems: 'center',
         justifyContent: 'center',
         margin: 10
-    }
+    },
+    Fab:{
+        position: 'absolute',
+        right: 20,
+        bottom: 20,
+        backgroundColor: '#c1121f',
+    },
 })

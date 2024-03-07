@@ -1,18 +1,18 @@
 import React from 'react'
 import { View, Text, Button, Image, TouchableOpacity } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
-import { styles } from '../themes/AppThemes'
+import { globalStyles } from '../themes/AppThemes'
 
 
 interface Props extends StackScreenProps<any, any> {}
 
 export const AsistenteScreen = ({navigation}:Props) => {
   return (
- <View style={styles.globalMargin}>
-    <Text style={styles.title2}>
+ <View style={globalStyles.globalMargin}>
+    <Text style={globalStyles.title2}>
         Bienvenido a nuestro asistente Virtual!
     </Text>
-    <Text style={styles.title3}>
+    <Text style={globalStyles.title3}>
       Te presentamos a Mediscul, nuestro asistente virtual quien te asistira en todas tus necesides
     </Text>
     <View style={{
@@ -21,11 +21,11 @@ export const AsistenteScreen = ({navigation}:Props) => {
     }}>
     <Image
     source={require('../Assets2/mascota.png')}
-    style={styles.avatar}
+    style={globalStyles.avatar}
 />
 </View>
 <TouchableOpacity 
-    style={styles.boton2}
+    style={globalStyles.boton2}
     onPress={() => {navigation.navigate('ChatAsistenteScreen')
     }}
 >
