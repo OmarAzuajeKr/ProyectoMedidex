@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { apiKey } from '../actions'; // Asegúrate de que la ruta al archivo index.ts es correcta
+import { GEMINI_API_KEY } from '../constants';
 
 const instance = axios.create({
   baseURL: 'https://api.openai.com/v1/',
   headers: {
-    'Authorization': `Bearer ${apiKey}`,
+    'Authorization': `Bearer ${GEMINI_API_KEY}`,
     'Content-Type': 'application/json'
   }
 });

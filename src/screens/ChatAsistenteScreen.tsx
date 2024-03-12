@@ -1,30 +1,32 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
-import { View , Text, Image, Button, TouchableOpacity} from 'react-native'
-import { globalStyles } from '../themes/AppThemes'
-import { Features } from '../components/asistente/features'
-import { StackScreenProps } from '@react-navigation/stack'
-import { dummyMessage } from '../actions'
+import { useEffect, useRef, useState } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
+import { StackScreenProps } from '@react-navigation/stack'
+import { View , Text, Image, Button, TouchableOpacity} from 'react-native'
 import Voice from '@react-native-community/voice';
 
-
+import { globalStyles } from '../themes/AppThemes'
+import { Features } from '../components/asistente/features'
+import { dummyMessage } from '../actions'
+import getGeminiModel from '../api/GeminiApi';
+import { ChatSession, GenerativeModel } from '@google/generative-ai';
 
 interface Props extends StackScreenProps<any, any> {}
 
-
 export const ChatAsistenteScreen = ({navigation}:Props) => {
 
-const [messages, setMessages] = useState(dummyMessage);
-const [recording, setRecording] = useState(false);
+const [messages, setMessages] = useState<any[]>(dummyMessage);
+const [recording, setRecording] = useState<boolean>(false);
 
-const [speaking, setSpeaking] = useState(false);
-const [results, setResults] = useState('');
+const [speaking, setSpeaking] = useState<boolean>(false);
+const [results, setResults] = useState<string>('');
+
+const model = getGeminiModel()
+const chat = useRef<ChatSession>()
 
 const clear = () => {setMessages([]);}
 const stopSpeaking = () => {setSpeaking(false);}
 
-const speechStartHandler = (e: any) => {
+const speechStartHandler = (e) => {
 console.log('Speech start handler');
 }
 const speechEndHandler = (e: any) => {
@@ -32,7 +34,7 @@ const speechEndHandler = (e: any) => {
   console.log('speech end handler');
   }
 
-  const speechResultsHandler = (e: any) => {
+  const speechResultsHandler = (e) => {
     console.log('voice event:', e);
     const text = e.value[0];
     setResults(text);
@@ -66,10 +68,10 @@ const speechEndHandler = (e: any) => {
       Voice.destroy().then(Voice.removeAllListeners);
     }
     
-  }, [])
+  }, []) 
 
-  console.log('results:', results);
-
+console.log('results:', results);
+  
 
   return (
     <View>
@@ -136,11 +138,12 @@ const speechEndHandler = (e: any) => {
   )
 }
 {/*Buttoms*/}
+
 <View style={globalStyles.IconContainer}>
   {
     recording?(
       <TouchableOpacity onPress={stopRecording}>
-        {/*Grabacion*/}
+      
   <Image
     source={require('../Assets2/MicrofonoBlanco.png')}
     style={globalStyles.Icon}
@@ -149,7 +152,7 @@ const speechEndHandler = (e: any) => {
   </TouchableOpacity>
     ):(
 <TouchableOpacity onPress={startRecording}>
-  {/*Inicio de la grabacion*/}
+ 
   <Image
     source={require('../Assets2/Microfono.png')}
     style={globalStyles.Icon}
@@ -180,7 +183,7 @@ const speechEndHandler = (e: any) => {
       </TouchableOpacity>
     )
   }
-</View>
+</View> 
 
 
 {/*<Button
@@ -189,6 +192,6 @@ onPress={()=>{navigation.navigate('features')}}
 
 />*/}
 
-    </View>
+</View>
   )
 }

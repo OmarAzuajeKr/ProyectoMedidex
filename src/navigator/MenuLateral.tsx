@@ -21,15 +21,15 @@ drawerContent={(props) => <CustomDrawerContent {...props}/>}
         headerStyle: {
           elevation: 0,
           shadowColor: 'transparent',
-          backgroundColor: '#EF233C',
+          backgroundColor: '#c1121f',
         },
         drawerStyle: {
-          backgroundColor: '#EF233C',
+          backgroundColor: '#c1121f',
           width: 240,
         },
         headerTintColor: 'white',
         drawerActiveBackgroundColor: 'white',
-        drawerActiveTintColor: '#EF233C',
+        drawerActiveTintColor: '#c1121f',
         drawerItemStyle: {
           marginVertical: 5,
           borderRadius: 100,

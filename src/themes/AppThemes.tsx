@@ -181,4 +181,21 @@ padding: 10,
         bottom: 20,
         backgroundColor: '#c1121f',
     },
+    globalMargin2: {
+        marginHorizontal: 20,
+        marginTop:'50%'
+    },
+    Icon2: {
+        width: 220,
+        height: 220,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    boton3: {
+        alignItems: 'center',
+        marginTop: 20,
+        backgroundColor: '#c1121f',
+        padding: 10,
+        borderRadius: 30
+    },
 })
