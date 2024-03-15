@@ -193,9 +193,68 @@ padding: 10,
     },
     boton3: {
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: -10,
         backgroundColor: '#c1121f',
         padding: 10,
-        borderRadius: 30
+        borderRadius: 30,
+        marginHorizontal: 20,
+            marginVertical: 30,
     },
+    container4: 
+    { flex: 1, 
+    backgroundColor: "#FEFAE0",
+     marginTop: 50 },
+
+    messageContainer: 
+    { padding: 10,
+         marginVertical: 5 },
+
+    messageText: 
+    { fontSize: 18 },
+
+    userMessage:{
+        fontSize: 18,
+        color: 'white',
+        fontWeight: 'bold',
+        marginLeft: 10,
+    },
+
+    userMessageContainer: { 
+        backgroundColor: "#c1121f",
+        borderRadius: 40,
+        marginLeft: 100,
+    }, // color de fondo para los mensajes del usuario
+    aiMessageContainer: { 
+        backgroundColor: "#f1faee",
+        borderRadius: 40,
+        marginRight: 50,
+    
+    }, // color de fondo para los mensajes del asistente
+    inputContainer:
+     { flexDirection: "row", 
+     alignItems: "center",
+      padding: 10,
+      backgroundColor: "#c1121f",},
+    input: {
+      flex: 1,
+      padding: 10,
+      backgroundColor: "#FFFFFF",
+      borderRadius: 10,
+      height: 50,
+    },
+    micIcon: {
+      padding: 10,
+      backgroundColor: "#FFFFFF",
+      borderRadius: 25,
+      height: 50,
+      width: 50,
+      justifyContent: "center",
+      alignItems: "center",
+      marginRight: 5,
+    },
+    aiImage: {
+        width: 30,
+        height: 30,
+        borderRadius: 30,
+    }
 })

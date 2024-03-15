@@ -11,7 +11,6 @@ import { Features } from '../components/asistente/features';
 export type RootStackParams2 = {
   AsistenteScreen: undefined,
 ChatAsistenteScreen: undefined
-features: undefined
 }
 
 
@@ -37,6 +36,5 @@ export const StackNavigatorAsistente = () => {
     >
       <Stack2.Screen name="AsistenteScreen" component={AsistenteScreen} />
       <Stack2.Screen name="ChatAsistenteScreen" component={ChatAsistenteScreen} />
-      <Stack2.Screen name="features" component={Features}/>
     </Stack2.Navigator>
   );}

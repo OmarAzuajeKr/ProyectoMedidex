@@ -5,13 +5,14 @@ import { RootStackParams } from '../navigator/StackNavigator'
 import { useQuery } from '@tanstack/react-query'
 import { getPokemonById } from '../actions/medicinas/get-medicinas-by-id'
 import { FullScreenLoader } from '../components/ui/FullScreenLoader'
-import { Chip } from 'react-native-paper'
+import { Chip, Button } from 'react-native-paper'
 //import FadeInImage from '../components/ui/FadeInImage'
 import { Formatter } from '../helpers/formatter'
-//import { styles } from '../themes/appThemes'
+import { globalStyles } from '../themes/AppThemes'
 import { Text } from 'react-native-paper'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ThemeContext } from '../components/context/ThemeContext'
+
 
 interface Props extends StackScreenProps<RootStackParams, 'MedicinasScreen'>{}
 
@@ -23,6 +24,10 @@ export const MedicinasScreen = ({navigation,route}:Props) => {
 
 const medicinasImg = isDark ? require('../Assets2/PastillaBlanca.png') : 
                              require('../Assets2/PastillaNegra.png');
+
+  const handleGoBack = () => {
+        navigation.goBack();
+    };
 
 
 const {PokemonId} = route.params;
@@ -155,6 +160,9 @@ if (!pokemon){
       />
 
       <View style={{height: 100}} />
+      <Button style={globalStyles.boton3} mode="contained" onPress={handleGoBack}>
+                Volver
+            </Button>
     </ScrollView>
   )
 }

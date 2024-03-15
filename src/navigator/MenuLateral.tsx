@@ -6,6 +6,8 @@ import { AsistenteScreen } from '../screens/AsistenteScreen';
 import { ConfiguracionScreen } from '../screens/ConfiguracionScreen';
 import { View, Image } from 'react-native';
 import { StackNavigatorAsistente } from './StackNavigatorAsistente';
+import { LoginScreen } from '../screens/auth/LoginScreen';
+import { StackNavigator3 } from './StackNavigatorLogin';
 
 const Drawer = createDrawerNavigator();
 

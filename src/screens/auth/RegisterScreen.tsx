@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { globalStyles } from '../../themes/AppThemes';
+//import  firebase  from '../../../bd/FireBase';
 
 export const RegisterScreen = () => {
     const navigation = useNavigation();
@@ -12,14 +13,36 @@ export const RegisterScreen = () => {
     const [birthdate, setbirthdate] = useState('');
     const [identification, setIdentification] = useState('');
 
-    const handleRegister = () => {
-        // Aquí puedes manejar la lógica de registro
-        console.log(username, email, password);
-    };
+  
 
     const handleGoBack = () => {
         navigation.goBack();
     };
+
+/*     const saveNewUser = () => {
+        if (!username || !email || !password || !birthdate || !identification) {
+          alert("Por favor rellene todos los campos");
+        } else {
+            firebase.db.collection('users').add({}).then(({ id }) => {
+                firebase.db.collection('users').doc(id).set({
+                    username,
+                    email,
+                    password,
+                    birthdate,
+                    identification
+                }).then(() => {
+                    alert('Usuario creado correctamente');
+                    navigation.goBack();
+                }).catch((error) => {
+                    alert('Error al crear el usuario');
+                });
+            });
+        }
+      } */
+      const handleRegister = () => {
+        // Aquí puedes manejar la lógica de registro
+        console.log(username);
+      };
 
     return (
         <View style={{

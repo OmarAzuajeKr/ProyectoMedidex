@@ -13,7 +13,7 @@ export const AsistenteScreen = ({navigation}:Props) => {
         Bienvenido a nuestro asistente Virtual!
     </Text>
     <Text style={globalStyles.title3}>
-      Te presentamos a Mediscul, nuestro asistente virtual quien te asistira en todas tus necesides
+      Te presentamos a EsculAPI, nuestro asistente virtual quien te asistira en todas tus necesidades.
     </Text>
     <View style={{
         alignItems: 'center',
