@@ -221,13 +221,15 @@ padding: 10,
 
     userMessageContainer: { 
         backgroundColor: "#c1121f",
-        borderRadius: 40,
+        borderRadius: 10,
         marginLeft: 100,
+        marginRight: 10,
     }, // color de fondo para los mensajes del usuario
     aiMessageContainer: { 
         backgroundColor: "#f1faee",
-        borderRadius: 40,
+        borderRadius: 10,
         marginRight: 50,
+        marginLeft:10,
     
     }, // color de fondo para los mensajes del asistente
     inputContainer:

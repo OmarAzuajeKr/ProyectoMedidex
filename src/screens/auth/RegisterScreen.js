@@ -3,7 +3,10 @@ import { View } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { globalStyles } from '../../themes/AppThemes';
-//import  firebase  from '../../../bd/FireBase';
+import  firebase  from '../../../bd/FireBase';
+import { db } from '../../../bd/FireBase';
+import { collection, addDoc, setDoc, doc } from "firebase/firestore"; 
+
 
 export const RegisterScreen = () => {
     const navigation = useNavigation();
@@ -19,26 +22,28 @@ export const RegisterScreen = () => {
         navigation.goBack();
     };
 
-/*     const saveNewUser = () => {
+    const saveNewUser = async () => { // Agrega async aquí
         if (!username || !email || !password || !birthdate || !identification) {
           alert("Por favor rellene todos los campos");
         } else {
-            firebase.db.collection('users').add({}).then(({ id }) => {
-                firebase.db.collection('users').doc(id).set({
-                    username,
-                    email,
-                    password,
-                    birthdate,
-                    identification
-                }).then(() => {
-                    alert('Usuario creado correctamente');
-                    navigation.goBack();
-                }).catch((error) => {
-                    alert('Error al crear el usuario');
-                });
+          try {
+            const docRef = await addDoc(collection(db, "users"), {});
+            await setDoc(doc(db, "users", docRef.id), {
+              username,
+              email,
+              password,
+              birthdate,
+              identification
             });
+            alert('Usuario creado correctamente');
+            navigation.goBack();
+          } catch (e) {
+            console.error('Error adding document: ', e);
+            alert('Error al crear el usuario');
+          }
         }
-      } */
+      }
+
       const handleRegister = () => {
         // Aquí puedes manejar la lógica de registro
         console.log(username);
@@ -87,7 +92,7 @@ export const RegisterScreen = () => {
                 style={{backgroundColor: 'transparent'}}
                 theme={{ colors: { primary: '#c1121f' } }}
             />
-            <Button style={globalStyles.boton2} mode="contained" onPress={handleRegister} >
+            <Button style={globalStyles.boton2} mode="contained" onPress={saveNewUser} >
                 Registrarse
             </Button>
             <Button style={globalStyles.boton2} mode="contained" onPress={handleGoBack}>
