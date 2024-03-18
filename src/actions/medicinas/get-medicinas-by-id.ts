@@ -1,18 +1,29 @@
-import { pokemonApi } from "../../api/medicinasApi";
-import { Pokemon } from "../../domain/entities/medicinas";
-import { PokeAPIPokemon } from "../../infraestructure/interfaces/medicinasInterfaces"
-import { PokemonMapper } from "../../infraestructure/mappers/medicinasMappers";
+import { medicinasApi } from "../../api/medicinasApi";
+import { Medicinas } from "../../domain/entities/medicinas";
+import { MedicinasAPIPaginatedResponse, ConceptProperty } from "../../infraestructure/interfaces/medicinasInterfaces"
+import { MedicinasMapper } from "../../infraestructure/mappers/medicinasMappers";
 
-export const getPokemonById = async(id:number):Promise<Pokemon> => {
+export const getMedicinasById = async(id:string):Promise<Medicinas> => {
  try{
-    const {data} = await pokemonApi.get<PokeAPIPokemon>(`/pokemon/${id}`)
+    const {data} = await medicinasApi.get<MedicinasAPIPaginatedResponse>(`/REST/rxcui/${id}.json`)
 
-const pokemon = await PokemonMapper.pokeAPiPokemonToEntity(data);
+    let medicinas: Medicinas | null = null;
 
-return pokemon;
+    data.drugGroup.conceptGroup.forEach(group => {
+        group.conceptProperties?.forEach(property => {
+            if (property.rxcui === id) {
+                medicinas = MedicinasMapper.medicinasToEntity(property);
+            }
+        });
+    });
+
+    if (!medicinas) {
+        throw new Error('No se encontró el medicamento con el id proporcionado');
+    }
+
+    return medicinas;
 
  } catch (error) {
      throw new Error('Error en la petición')
  }
-
 }

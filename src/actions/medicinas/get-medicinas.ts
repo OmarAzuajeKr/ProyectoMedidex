@@ -1,25 +1,34 @@
-import type { Pokemon } from "../../domain/entities/medicinas";
-import { pokemonApi } from "../../api/medicinasApi";
-import type { PokeAPIPaginatedResponse, PokeAPIPokemon } from '../../infraestructure/interfaces/medicinasInterfaces';
-import { PokemonMapper } from "../../infraestructure/mappers/medicinasMappers";
+import type { Medicinas } from "../../domain/entities/medicinas";
+import { medicinasApi } from "../../api/medicinasApi";
+import type { MedicinasAPIPaginatedResponse, ConceptProperty } from '../../infraestructure/interfaces/medicinasInterfaces';
+//import { PokemonMapper } from "../../infraestructure/mappers/medicinasMappers";
 
-export const getPokemons = async(page:number, limit:number = 20):Promise<Pokemon[]> => {
+export const getMedicinas = async(page:number, limit:number = 20):Promise<Medicinas[]> => {
     try {
-        const url = `/pokemon?offset=${page * 10}&limit=${limit}`
-        const response = await pokemonApi.get<PokeAPIPaginatedResponse>(url);
+        const url = `https://rxnav.nlm.nih.gov/REST/drugs.json?name=amlodipine`
+        const response = await medicinasApi.get<MedicinasAPIPaginatedResponse>(url);
 
-        const PokemonPromises = response.data.results.map((info) => {
-            return pokemonApi.get<PokeAPIPokemon>(info.url)
+        const medicamentos: Medicinas[] = [];
+
+        response.data.drugGroup.conceptGroup.forEach(group => {
+            group.conceptProperties?.forEach(property => {
+                const medicinas: Medicinas = {
+                    rxcui: property.rxcui,
+                    name: property.name,
+                    synonym: property.synonym,
+                    tty: property.tty,
+                    language: property.language,
+                    suppress: property.suppress,
+                    umlscui: property.umlscui
+                };
+                medicamentos.push(medicinas);
+            });
         });
 
-        const pokeApiPokemons = await Promise.all(PokemonPromises);
-        const pokemons = pokeApiPokemons.map((item)=>PokemonMapper.pokeAPiPokemonToEntity(item.data));
-
-
-        return pokemons;
+        return medicamentos;
 
     } catch (error) {
         console.log(error);
-        throw new Error('Error nos se pudo obtener los pokemons')
+        throw new Error('Error nos se pudo obtener las medicinas')
     }
 }

@@ -21,13 +21,11 @@ export const App = () => {
 
 
   return (
-    <>
     <QueryClientProvider client={queryClient}>
 <NavigationContainer>
     <StackNavigator3/>
 </NavigationContainer>
 </QueryClientProvider>
-</>
   )
 }
 

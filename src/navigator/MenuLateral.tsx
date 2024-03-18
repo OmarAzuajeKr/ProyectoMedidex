@@ -9,8 +9,13 @@ import { StackNavigatorAsistente } from './StackNavigatorAsistente';
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { StackNavigator3 } from './StackNavigatorLogin';
 import { ListaUsuariosScreen } from '../screens/ListaUsuariosScreen';
+import { getAuth, signOut } from 'firebase/auth';
+import { FIREBASE_AUTH } from '../../bd/FireBase';
+import { DrawerItem } from '@react-navigation/drawer';
 
 const Drawer = createDrawerNavigator();
+const auth = FIREBASE_AUTH;
+
 
 export const MenuLateral = () => {
   return (
@@ -54,18 +59,27 @@ drawerContent={(props) => <CustomDrawerContent {...props}/>}
 
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
+  const signOutUser = async () => {
+    const auth = getAuth();
+    try {
+      await signOut(auth);
+      props.navigation.navigate('LoginScreen');
+    } catch (error) {
+      console.error('Error al cerrar sesión: ', error);
+    }
+  }
 
 return (
   <DrawerContentScrollView>
-    <View style={{
-    height: 200,
-    backgroundColor: 'white',
-    margin: 20,
-    borderRadius: 100
-    }}>
-
+    <View style={{backgroundColor: '#c1121f', padding: 20}}>
+      <Image
+        source={require('../Assets2/Medidex Logo.png')}
+        style={{width: 150, height: 150}}
+        resizeMode="center"
+      />
     </View>
     <DrawerItemList {...props} />
+    <DrawerItem label="Cerrar sesión" onPress={signOutUser} />
   </DrawerContentScrollView>
 )
 

@@ -1,64 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ScrollView } from 'react-native';
-import { ListItem, Avatar } from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
-import db from '../../bd/FireBase'; // Importa db en lugar de firebase
+import { View, Text } from 'react-native';
+import { collection, getDocs } from 'firebase/firestore';
+import { FIREBASE_DB } from '../../bd/FireBase';
 
 export const ListaUsuariosScreen = () => {
     const [users, setUsers] = useState([]);
-    const navigation = useNavigation();
+    const db = FIREBASE_DB;
 
     useEffect(() => {
-        const unsubscribe = db.collection('users').onSnapshot((querySnapshot) => { // Usa db en lugar de firebase.firestore()
-            const users = [];
-            querySnapshot.docs.forEach((doc) => {
-                const { username, email, birthdate, identification } = doc.data();
-                users.push({
-                    id: doc.id,
-                    username,
-                    email,
-                    birthdate,
-                    identification,
-                });
-            });
-            setUsers(users);
-        });
+        const fetchUsers = async () => {
+            const usersCollection = collection(db, 'users');
+            const usersSnapshot = await getDocs(usersCollection);
+            const usersList = usersSnapshot.docs.map(doc => doc.data());
+            setUsers(usersList);
+        };
 
-        // Limpiar la suscripción al desmontar
-        return () => unsubscribe();
+        fetchUsers();
     }, []);
 
     return (
-        <ScrollView>
-            <Button
-                onPress={() => navigation.navigate('RegisterScreen')}
-                title="Create User"
-            />
-            {users.map((user) => {
-                return (
-                    <ListItem
-                        key={user.id}
-                        bottomDivider
-                        onPress={() => {
-                            navigation.navigate('UserDetailScreen', {
-                                userId: user.id,
-                            });
-                        }}
-                    >
-                        <ListItem.Chevron />
-                        <Avatar
-                            source={{
-                                uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-                            }}
-                            rounded
-                        />
-                        <ListItem.Content>
-                            <ListItem.Title>{user.username}</ListItem.Title>
-                            <ListItem.Subtitle>{user.email}</ListItem.Subtitle>
-                        </ListItem.Content>
-                    </ListItem>
-                );
-            })}
-        </ScrollView>
+        <View>
+            {users.map((user, index) => (
+                <View key={index}>
+                    <Text>Nombre de usuario: {user.name}</Text>
+                    <Text>Correo electrónico: {user.email}</Text>
+                    <Text>Fecha de nacimiento: {user.birthdate}</Text>
+                    <Text>Identificación: {user.identification}</Text>
+                </View>
+            ))}
+        </View>
     );
 };

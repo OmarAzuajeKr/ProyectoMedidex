@@ -1,17 +1,19 @@
-import { Pokemon } from "../../domain/entities/medicinas";
-import { getPokemonById } from "./get-medicinas-by-id";
+//Cambiar Pokemon por Medicina
+import { Medicinas } from "../../domain/entities/medicinas";
+import { getMedicinasById } from "./get-medicinas-by-id"
 
+export const getMedicinasByIds = async (rxcui: number []): Promise<Medicinas[]> => {
 
-export const getPokemonByIds = async (ids: number[]): Promise<Pokemon[]> => {
+   try {
 
-try {
+      const medicinaPromises: Promise<Medicinas>[] = rxcui.map(rxcui => {
+         return getMedicinasById(Number(rxcui)); // Convert rxcui to a number
+      })
 
-const pokemonPromises: Promise<Pokemon>[] = ids.map( id => {
-return getPokemonById(id);})
+      return await Promise.all(medicinaPromises);
 
-return await Promise.all(pokemonPromises);
-
-} catch (error) {
-   throw new Error('Error al obtener las medicinas');}
+   } catch (error) {
+      throw new Error('Error al obtener las medicinas');
+   }
 
 }

@@ -1,35 +1,12 @@
-export interface Pokemon {
-    id: number;
-    name: string;
-    types: string[];
-avatar: string;
-sprites: string[];
+import { Suppress, TTY, Language } from "../../infraestructure/interfaces/medicinasInterfaces";
 
 
-games: string[];
-stats: Stat[];
-abilities: string[];
-moves: Move[];
-}
-export interface Stat {
-    name: string;
-value: number;
-
-
-}
-
-export interface PokemonDetail {
-    id: number;
-    name: string;
-    types: string[];
-    avatar: string;
-    sprites: string[];
-    abilities: string[];
-    height: number;
-    weight: number;
-    stats: Stat[];
-}
-export interface Move {
-    name: string;
-    level: number;
+export interface Medicinas {
+    rxcui:    string;
+    name:     string;
+    synonym:  string;
+    tty:      TTY;
+    language: Language;
+    suppress: Suppress;
+    umlscui:  string;
 }

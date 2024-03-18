@@ -1,50 +1,36 @@
 import React from 'react'
 import { View, StyleSheet, Image, Pressable} from 'react-native';
-import { Pokemon } from '../../domain/entities/medicinas'
+import { Medicinas } from '../../domain/entities/medicinas'
 import { Card, Text } from 'react-native-paper'
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParams } from '../../navigator/StackNavigator';
-
-//import { styles } from '../../themes/appThemes';
-
+import { medicinasApi } from '../../api/medicinasApi';
+import { globalStyles } from '../../themes/AppThemes';
 
 interface Props {
-    pokemon: Pokemon
+    medicina: Medicinas
 }
 
-export const PokemonCard = ({pokemon}:Props) => {
+export const MedicinaCard = ({medicina}:Props) => {
 
 const navigation= useNavigation<NavigationProp<RootStackParams>>();
 
-
-
   return (
 <Pressable
-style={{flex:1}}
-onPress={
-  () => navigation.navigate('MedicinasScreen',{PokemonId:pokemon.id})
-}
+  style={{flex:1}}
+  onPress={() => navigation.navigate('MedicinasScreen', { PokemonId: medicina.rxcui })}
 >
 <Card style={[styles.cardContainer,]}>
-    <Text style={styles.name} variant='bodyLarge' lineBreakMode='middle'>
-        {pokemon.name}
-        {'\n#' + pokemon.id}
-    </Text>
-
 {/* Imagen de la pokebola*/}
 
-    <View style={styles.pokeballContainer}>
-    <Image source={require('../../Assets2/PastillaBlanca.png')} style={styles.pokeball} />        
+<View style={styles.pokeballContainer}>
+    <Image source={require('../../Assets2/PastillaNegra.png')} style={styles.pokeball} />        
     </View>
 
-{/*Imagen del Pokemon*/}
 
-    <Image source={{uri: pokemon.avatar}} 
-          style={styles.pokemonImage} />
-
-{/* Tipos */}
-<Text style={[styles.name, {marginTop:35}]}>{pokemon.types[0]} </Text>
-
+    <Text style={styles.name} variant='bodyLarge' lineBreakMode='middle'>
+        {medicina.name}
+    </Text>
 </Card>
 </Pressable>
   )
@@ -70,8 +56,8 @@ const styles = StyleSheet.create({
     },
     name: {
       color: 'white',
-      top: 10,
-      left: 10,
+      top: 1,
+      left: 5,
     },
     pokeball: {
       width: 300,
