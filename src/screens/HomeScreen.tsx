@@ -39,7 +39,7 @@ const {isLoading, data, fetchNextPage} = useInfiniteQuery({
  <FlatList
  data={data?.pages.flat()??[] }
  keyExtractor={(medicina, index) => `${medicina.rxcui}-${index}`}
- numColumns={2}
+ numColumns={1}
  style={{paddingTop: top + 20}}
  ListHeaderComponent={()=>(
   <Text variant='displayMedium'>Medicinas</Text>

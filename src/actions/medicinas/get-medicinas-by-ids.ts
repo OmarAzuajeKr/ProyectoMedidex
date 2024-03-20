@@ -2,12 +2,12 @@
 import { Medicinas } from "../../domain/entities/medicinas";
 import { getMedicinasById } from "./get-medicinas-by-id"
 
-export const getMedicinasByIds = async (rxcui: number []): Promise<Medicinas[]> => {
+export const getMedicinasByIds = async (rxcui: string []): Promise<Medicinas[]> => {
 
    try {
 
       const medicinaPromises: Promise<Medicinas>[] = rxcui.map(rxcui => {
-         return getMedicinasById(Number(rxcui)); // Convert rxcui to a number
+         return getMedicinasById (rxcui); // Convert rxcui to a number
       })
 
       return await Promise.all(medicinaPromises);

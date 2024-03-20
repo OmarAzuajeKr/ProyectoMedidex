@@ -8,7 +8,10 @@ interface Props extends StackScreenProps<any, any> {}
 
 export const AsistenteScreen = ({navigation}:Props) => {
   return (
- <View style={globalStyles.globalMargin}>
+ <View style={{
+    marginLeft: 40,
+    marginRight: 40,
+ }}>
     <Text style={globalStyles.title2}>
         Bienvenido a nuestro asistente Virtual!
     </Text>

@@ -1,16 +1,16 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useContext } from 'react'
-import { View, ScrollView, StyleSheet } from 'react-native'
+import { View, ScrollView, StyleSheet, Text } from 'react-native'
 import { RootStackParams } from '../navigator/StackNavigator'
 import { useQuery } from '@tanstack/react-query'
 import { getMedicinasById } from '../actions/medicinas/get-medicinas-by-id'
 import { FullScreenLoader } from '../components/ui/FullScreenLoader'
-import { Chip, Button, Text } from 'react-native-paper'
+import { Chip, Button } from 'react-native-paper'
 import { Formatter } from '../helpers/formatter'
 import { globalStyles } from '../themes/AppThemes'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ThemeContext } from '../components/context/ThemeContext'
-import { MedicinasMapper } from '../infraestructure/mappers/medicinasMappers'
+import { MedicinaFormatter } from '../infraestructure/mappers/medicinaFormatter'
 
 interface Props extends StackScreenProps<RootStackParams, 'MedicinasScreen'> { }
 
@@ -22,21 +22,29 @@ export const MedicinasScreen = ({ navigation, route }: Props) => {
     navigation.goBack();
   };
 
-  const { MedicinasId } = route.params;
 
-  const { isLoading, data: medicinaData } = useQuery({
-    queryKey: ['Medicina', MedicinasId],
+  console.log('penis2');
+  
+  const { MedicinasId } = route.params;
+  const { isLoading, isError, data: medicina } = useQuery({
+    queryKey: ['Medicinas', MedicinasId],
     queryFn: () => getMedicinasById(MedicinasId),
     staleTime: 1000 * 60 * 60
   })
 
-  if (isLoading || !medicinaData) {
+  console.log(medicina);
+
+  if (isLoading) {
     return (
       <FullScreenLoader />
     )
   }
 
-  const medicina = MedicinasMapper.medicinasToEntity(medicinaData);
+  if (isError || !medicina) {
+    return (
+      <Text>Error al cargar los datos de la medicina</Text>
+    )
+  }
 
   return (
     <ScrollView
@@ -49,14 +57,46 @@ export const MedicinasScreen = ({ navigation, route }: Props) => {
         <Text
           style={{
             ...styles.medicinaName,
-            top: top + 5,
+            top: top + 20,
           }}>
-          {Formatter.capitalize(medicina.name) + '\n'}#{medicina.rxcui}
+          {Formatter.capitalize(medicina.displayName) + '\n'}#{medicina.rxcui}
+        </Text>
+        <Text>
+        { medicina.fullGenericName}
+        </Text>
+        <Text>
+        { medicina.fullName}
+        </Text>
+        <Text>
+        { medicina.genericRxcui}
+        </Text>
+        <Text>
+        { medicina.rxtermsDoseForm}
+        </Text>
+        <Text>
+        { medicina.synonym }
+        </Text>
+        <Text>
+        {medicina.route}
+        </Text>
+        <Text>
+        {medicina.rxnormDoseForm}
+        </Text>
+        <Text>
+        {medicina.strength}
+        </Text>
+        <Text>
+        {medicina.termType}
+        </Text>
+        <Text>
+        { medicina.synonym }
         </Text>
       </View>
+    
+
 
 {/* Sinonimos de la medicina*/}
-<View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10 }}>
+{/* <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10 }}>
   {medicina.synonym && medicina.synonym.split(',').map((type: string) => (
     <Chip
       key={type.trim()}
@@ -66,7 +106,7 @@ export const MedicinasScreen = ({ navigation, route }: Props) => {
       {type.trim()}
     </Chip>
   ))}
-</View>
+</View> */}
 
       <View style={{ height: 100 }} />
       <Button style={globalStyles.boton3} mode="contained" onPress={handleGoBack}>

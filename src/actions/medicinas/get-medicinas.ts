@@ -1,31 +1,19 @@
-import type { Medicinas } from "../../domain/entities/medicinas";
+import type { Medicinas2 } from "../../domain/entities/medicinas2";
 import { medicinasApi } from "../../api/medicinasApi";
-import type { MedicinasAPIPaginatedResponse, ConceptProperty } from '../../infraestructure/interfaces/medicinasInterfaces';
-//import { PokemonMapper } from "../../infraestructure/mappers/medicinasMappers";
+import { MedicinaTermino } from '../../infraestructure/interfaces/medicinaTerminoInterface';
 
-export const getMedicinas = async(page:number, limit:number = 20):Promise<Medicinas[]> => {
+export const getMedicinas = async(id:string):Promise<Medicinas2[]> => {
     try {
-        const url = `https://rxnav.nlm.nih.gov/REST/drugs.json?name=amlodipine`
-        const response = await medicinasApi.get<MedicinasAPIPaginatedResponse>(url);
+        const url = `https://rxnav.nlm.nih.gov/REST/RxTerms/allconcepts.json`
+        const response = await medicinasApi.get<MedicinaTermino>(url);
 
-        const medicamentos: Medicinas[] = [];
+        const medicinas: Medicinas2[] = response.data.minConceptGroup.minConcept.map(property => ({
+            fullName: property.fullName,
+            rxcui: property.rxcui,
+            termType: property.termType,
+        }));
 
-        response.data.drugGroup.conceptGroup.forEach(group => {
-            group.conceptProperties?.forEach(property => {
-                const medicinas: Medicinas = {
-                    rxcui: property.rxcui,
-                    name: property.name,
-                    synonym: property.synonym,
-                    tty: property.tty,
-                    language: property.language,
-                    suppress: property.suppress,
-                    umlscui: property.umlscui
-                };
-                medicamentos.push(medicinas);
-            });
-        });
-
-        return medicamentos;
+        return medicinas;
 
     } catch (error) {
         console.log(error);

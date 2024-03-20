@@ -216,7 +216,7 @@ padding: 10,
         fontSize: 18,
         color: 'white',
         fontWeight: 'bold',
-        marginLeft: 10,
+        flexDirection: 'row',
     },
 
     userMessageContainer: { 
@@ -224,6 +224,7 @@ padding: 10,
         borderRadius: 10,
         marginLeft: 100,
         marginRight: 10,
+        flexDirection: 'row',
     }, // color de fondo para los mensajes del usuario
     aiMessageContainer: { 
         backgroundColor: "#f1faee",

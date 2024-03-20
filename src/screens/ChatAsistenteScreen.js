@@ -117,6 +117,20 @@ export const ChatAsistenteScreen = () => {
           style={globalStyles.input}
           placeholderTextColor="black"
         />
+        <TouchableOpacity style={globalStyles.sendIcon} onPress={sendMessage}> 
+          <FontAwesome
+            name="send"
+            size={24}
+            color="black"
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "white",
+              borderRadius: 50,
+              padding: 10,
+              marginLeft: 5,
+            }}></FontAwesome>
+        </TouchableOpacity>
         {loading && <ActivityIndicator size="small" color="black" />}
       </View>
     </View>

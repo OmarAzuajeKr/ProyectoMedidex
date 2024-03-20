@@ -21,12 +21,14 @@ export const SearchScreen = ({navigation}:Props) => {
     const {top} = useSafeAreaInsets();
     const [term, setTerm] = useState('');
     const debonceValue = useDebouncedValue(term);
-
+    
     const {isLoading, data:MedicinaNameList = []} = useQuery ({
-        queryKey: ['medicinas', 'search'],
+        queryKey: ['medicinas', 'search'],        
         queryFn: () => getMedicinaNamesWithId(0),
         staleTime: 1000 * 60 * 5
     })
+    
+    console.log(MedicinaNameList);
 
     const MedicinaNameIdList = useMemo(() => {
         if(!isNaN(Number(debonceValue))){
@@ -38,13 +40,13 @@ export const SearchScreen = ({navigation}:Props) => {
 
         if (debonceValue.length < 3) return [];
 
-        return MedicinaNameList.filter(medicina => medicina.name.includes(debonceValue.toLocaleLowerCase()));
+        return MedicinaNameList.filter(medicina => medicina.name.toLowerCase().includes(debonceValue.toLowerCase()));
 
     }, [debonceValue])
 
     const {isLoading:isLoadingMedicinas, data:medicinas = []} = useQuery({
         queryKey: ['medicinas', 'by', MedicinaNameIdList],
-        queryFn: () => getMedicinasByIds(MedicinaNameIdList.map (medicina => Number(medicina.id))),
+        queryFn: () => getMedicinasByIds(MedicinaNameIdList.map (medicina => medicina.id)),
         staleTime: 1000 * 60 * 5,
         enabled: debonceValue.length >= 3
     })

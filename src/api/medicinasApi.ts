@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const medicinasApi = axios.create({
-    baseURL: "https://rxnav.nlm.nih.gov/REST/drugs.json?name=amlodipine",
+    baseURL: "https://rxnav.nlm.nih.gov/REST/",
 });
 
 medicinasApi.get('/').then(response => {

@@ -1,12 +1,16 @@
-import { Suppress, TTY, Language } from "../../infraestructure/interfaces/medicinasInterfaces";
+//import { Suppress, TTY, Language } from "../../infraestructure/interfaces/medicinasInterfaces";
 
 
 export interface Medicinas {
-    rxcui:    string;
-    name:     string;
-    synonym:  string;
-    tty:      TTY;
-    language: Language;
-    suppress: Suppress;
-    umlscui:  string;
-}
+    displayName: string,
+    synonym: string,
+    fullName: string, 
+    fullGenericName: string,
+    strength: string,
+    rxtermsDoseForm: string, 
+    route: string, 
+    termType: string,
+    rxcui: string,
+    genericRxcui: string,
+    rxnormDoseForm: string,
+    suppress: string, }

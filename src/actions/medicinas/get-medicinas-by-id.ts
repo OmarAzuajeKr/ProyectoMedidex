@@ -1,29 +1,29 @@
+import { log } from "console";
 import { medicinasApi } from "../../api/medicinasApi";
 import { Medicinas } from "../../domain/entities/medicinas";
-import { MedicinasAPIPaginatedResponse, ConceptProperty } from "../../infraestructure/interfaces/medicinasInterfaces"
-import { MedicinasMapper } from "../../infraestructure/mappers/medicinasMappers";
+//import { MedicinasAPIPaginatedResponse, ConceptProperty } from "../../infraestructure/interfaces/medicinasInterfaces"
+import { MedicinaFormatter} from "../../infraestructure/mappers/medicinaFormatter";
+import { MedicinaR } from "../../infraestructure/interfaces/interfacePrueba";
 
 export const getMedicinasById = async(id:string):Promise<Medicinas> => {
  try{
-    const {data} = await medicinasApi.get<MedicinasAPIPaginatedResponse>(`/REST/rxcui/${id}.json`)
+        
+        const url = `https://rxnav.nlm.nih.gov/REST/RxTerms/rxcui/${id}/allinfo.json`
+        const {data} = await medicinasApi.get<MedicinaR>(url, {
+                headers: {
+                    Accept: '*/*',
+                },
+            });
 
-    let medicinas: Medicinas | null = null;
+        let medicinas: Medicinas | null = MedicinaFormatter.medicinasToEntity(data);
 
-    data.drugGroup.conceptGroup.forEach(group => {
-        group.conceptProperties?.forEach(property => {
-            if (property.rxcui === id) {
-                medicinas = MedicinasMapper.medicinasToEntity(property);
-            }
-        });
-    });
+        if (!medicinas) {
+                throw new Error('No se encontró el medicamento con el id proporcionado');
+        }
 
-    if (!medicinas) {
-        throw new Error('No se encontró el medicamento con el id proporcionado');
-    }
-
-    return medicinas;
+        return medicinas;
 
  } catch (error) {
-     throw new Error('Error en la petición')
+         throw new Error('Error en la petición')
  }
 }

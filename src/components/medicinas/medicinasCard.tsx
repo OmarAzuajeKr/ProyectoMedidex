@@ -8,17 +8,18 @@ import { medicinasApi } from '../../api/medicinasApi';
 import { globalStyles } from '../../themes/AppThemes';
 
 interface Props {
-    medicina: Medicinas
+    medicina:Medicinas;
 }
 
 export const MedicinaCard = ({medicina}:Props) => {
 
 const navigation= useNavigation<NavigationProp<RootStackParams>>();
 
+/* console.log(medicina); */
   return (
 <Pressable
   style={{flex:1}}
-  onPress={() => navigation.navigate('MedicinasScreen', { PokemonId: medicina.rxcui })}
+  onPress={() => navigation.navigate('MedicinasScreen', { MedicinasId: medicina.rxcui })}
 >
 <Card style={[styles.cardContainer,]}>
 {/* Imagen de la pokebola*/}
@@ -26,10 +27,24 @@ const navigation= useNavigation<NavigationProp<RootStackParams>>();
 <View style={styles.pokeballContainer}>
     <Image source={require('../../Assets2/PastillaNegra.png')} style={styles.pokeball} />        
     </View>
+    <Text style={{
+              color: 'white',
+              fontSize: 20,
+              fontWeight: 'bold',
+              top: 10,
+              left: 5,
+    }}>
+        {medicina.rxcui}
+    </Text>
 
-
-    <Text style={styles.name} variant='bodyLarge' lineBreakMode='middle'>
-        {medicina.name}
+    <Text style={{
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold',
+        top: 10,
+        left: 5,
+    }}>
+        {medicina.fullName}
     </Text>
 </Card>
 </Pressable>
