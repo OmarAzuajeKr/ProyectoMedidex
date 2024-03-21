@@ -259,5 +259,17 @@ padding: 10,
         width: 30,
         height: 30,
         borderRadius: 30,
-    }
+    },
+    contenidoMedicinas:{
+        marginHorizontal: 20,
+        marginVertical: 30,
+        marginTop: -30,
+        padding: 10,
+    },
+    tituloMedicinas:{
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        color: 'white',
+    },
 })

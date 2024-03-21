@@ -25,7 +25,7 @@ const navigation= useNavigation<NavigationProp<RootStackParams>>();
 {/* Imagen de la pokebola*/}
 
 <View style={styles.pokeballContainer}>
-    <Image source={require('../../Assets2/PastillaNegra.png')} style={styles.pokeball} />        
+    <Image source={require('../../Assets2/PastillaBGNegra.png')} style={styles.pokeball} />        
     </View>
     <Text style={{
               color: 'white',
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
       width: 300,
       height: 300,
       right: -100,
-      top: -100,
+      top: -98,
       opacity: 0.4,
     },
     pokemonImage: {

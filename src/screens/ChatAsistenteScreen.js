@@ -94,7 +94,7 @@ export const ChatAsistenteScreen = () => {
       <FlatList
         data={messages}
         renderItem={renderMessage}
-        keyExtractor={(item) => item.text}
+        keyExtractor={(item, i) => item.text + i}
       />
       <View style={globalStyles.inputContainer}>
         {/* microphone icon */}

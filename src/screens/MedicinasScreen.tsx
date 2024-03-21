@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useContext } from 'react'
-import { View, ScrollView, StyleSheet, Text } from 'react-native'
+import { View, ScrollView, StyleSheet, Text, Image } from 'react-native'
 import { RootStackParams } from '../navigator/StackNavigator'
 import { useQuery } from '@tanstack/react-query'
 import { getMedicinasById } from '../actions/medicinas/get-medicinas-by-id'
@@ -11,6 +11,8 @@ import { globalStyles } from '../themes/AppThemes'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ThemeContext } from '../components/context/ThemeContext'
 import { MedicinaFormatter } from '../infraestructure/mappers/medicinaFormatter'
+import { FlatList } from 'react-native-gesture-handler'
+import { PastillaBG } from '../components/ui/pastillaBG'
 
 interface Props extends StackScreenProps<RootStackParams, 'MedicinasScreen'> { }
 
@@ -59,59 +61,65 @@ export const MedicinasScreen = ({ navigation, route }: Props) => {
             ...styles.medicinaName,
             top: top + 20,
           }}>
-          {Formatter.capitalize(medicina.displayName) + '\n'}#{medicina.rxcui}
+          {(medicina.displayName) + '\n'}#{medicina.rxcui}
         </Text>
-        <Text>
+        <Image source={require('../Assets2/PastillaBGNegra.png')} style={styles.pastillaImage} />
+        <View style={{
+          marginTop: 60,
+        }}>
+        {/* Nombre Generico */}
+        <Text style={globalStyles.tituloMedicinas}>Nombre Generico</Text>
+        <Text style={globalStyles.Texto}>
         { medicina.fullGenericName}
         </Text>
-        <Text>
+        {/* Nombre Completo*/}
+        <Text style={globalStyles.tituloMedicinas}>Nombre Completo</Text>
+        <Text style={globalStyles.Texto}>
         { medicina.fullName}
         </Text>
-        <Text>
+        {/* Identificacion */}
+        <Text style={globalStyles.tituloMedicinas}>Identificacion Generica</Text>
+        <Text style={globalStyles.Texto}>
         { medicina.genericRxcui}
         </Text>
-        <Text>
+        {/* Cantidad de dosis */}
+        <Text style={globalStyles.tituloMedicinas}>Cantidad de Dosis</Text>
+        <Text style={globalStyles.Texto}>
         { medicina.rxtermsDoseForm}
         </Text>
-        <Text>
+        {/*Sinonimo*/}
+        <Text style={globalStyles.tituloMedicinas}>Sinonimo Medico</Text>
+        <Text style={globalStyles.Texto}>
         { medicina.synonym }
         </Text>
-        <Text>
+        {/* Ruta */}
+        <Text style={globalStyles.tituloMedicinas}>Ruta de administracion</Text>
+        <Text style={globalStyles.Texto}>
         {medicina.route}
         </Text>
-        <Text>
+        {/*Tipo de Dosis*/}
+        <Text style={globalStyles.tituloMedicinas}>Tipo de dosis</Text>
+        <Text style={globalStyles.Texto}>
         {medicina.rxnormDoseForm}
         </Text>
-        <Text>
+        {/*Dosis*/}
+        <Text style={globalStyles.tituloMedicinas}>Dosificacion</Text>
+        <Text style={globalStyles.Texto}>
         {medicina.strength}
         </Text>
-        <Text>
+        {/*Tipo de termino*/}
+        <Text style={globalStyles.tituloMedicinas}>Tipo de Termino</Text>
+        <Text style={globalStyles.Texto}>
         {medicina.termType}
         </Text>
-        <Text>
-        { medicina.synonym }
-        </Text>
+        </View>
       </View>
     
 
-
-{/* Sinonimos de la medicina*/}
-{/* <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10 }}>
-  {medicina.synonym && medicina.synonym.split(',').map((type: string) => (
-    <Chip
-      key={type.trim()}
-      mode="outlined"
-      selectedColor="black"
-      style={{ marginLeft: 10 }}>
-      {type.trim()}
-    </Chip>
-  ))}
-</View> */}
-
-      <View style={{ height: 100 }} />
+      <View style={{ height: 400 }} />
       <Button style={globalStyles.boton3} mode="contained" onPress={handleGoBack}>
         Volver
-      </Button>
+      </Button> 
     </ScrollView>
   )
 }
@@ -126,7 +134,7 @@ const styles = StyleSheet.create({
   },
   medicinaName: {
     color: 'white',
-    fontSize: 40,
+    fontSize: 30,
     alignSelf: 'flex-start',
     left: 20,
   },
@@ -154,10 +162,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pastillaImage: {
-    width: 240,
-    height: 240,
+    width: 440,
+    height: 440,
     position: 'absolute',
     bottom: -40,
+    opacity: 0.3,
   }
 
 });

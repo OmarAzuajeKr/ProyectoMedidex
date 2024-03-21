@@ -13,8 +13,8 @@ export const PastillaBG = ({style}: Props) => {
 const {isDark} = useContext(ThemeContext);
 
 const medicinaImg = isDark
-? require('../../Assets2/PastillaBlanca.png')
-: require('../../Assets2/PastillaNegra.png')
+? require('../../Assets2/PastillaBGBlanca.png')
+: require('../../Assets2/PastillaBGNegra.png')
 
   return (
     <Image
@@ -25,7 +25,7 @@ const medicinaImg = isDark
       height: 500,
       opacity: 0.3,
       position: 'absolute',
-      bottom: 400,
+      bottom: 370,
       right: -100
     }}
     />
