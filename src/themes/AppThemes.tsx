@@ -199,6 +199,8 @@ padding: 10,
         borderRadius: 30,
         marginHorizontal: 20,
             marginVertical: 30,
+        marginLeft: 100,
+        marginRight: 100,
     },
     container4: 
     { flex: 1, 

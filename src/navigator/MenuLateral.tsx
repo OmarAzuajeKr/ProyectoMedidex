@@ -47,8 +47,7 @@ drawerContent={(props) => <CustomDrawerContent {...props}/>}
     >
       <Drawer.Screen name="Inicio" component={StackNavigator} />
       <Drawer.Screen name="Perfil" component={PerfilScreen} />
-      <Drawer.Screen name="Asistente" component={StackNavigatorAsistente} />
-      <Drawer.Screen name="Configuracion" component={ConfiguracionScreen} />
+      <Drawer.Screen name="Asistente" component={StackNavigatorAsistente} />    
       <Drawer.Screen name="Lista de Usuarios" component={ListaUsuariosScreen} />
 
 
@@ -73,8 +72,12 @@ return (
   <DrawerContentScrollView>
     <View style={{backgroundColor: '#c1121f', padding: 20}}>
       <Image
-        source={require('../Assets2/Medidex Logo.png')}
-        style={{width: 150, height: 150}}
+        source={require('../Assets2/Logotipo 2.png')}
+        style={{width: 160, height: 160,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        marginLeft: 30,
+        }}
         resizeMode="center"
       />
     </View>
