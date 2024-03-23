@@ -5,7 +5,7 @@ export class MedicinaMapper{
 
     static medicinasToEntityTwo (data:Medicinas2){
         return{
-          fullname: data.fullName,
+          fullName: data.fullName,
           rxcui: data.rxcui,
           termType: data.termType
         };

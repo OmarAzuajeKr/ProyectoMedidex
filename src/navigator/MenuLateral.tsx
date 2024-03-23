@@ -38,6 +38,7 @@ drawerContent={(props) => <CustomDrawerContent {...props}/>}
         headerTintColor: 'white',
         drawerActiveBackgroundColor: 'white',
         drawerActiveTintColor: '#c1121f',
+        drawerInactiveTintColor: 'white', 
         drawerItemStyle: {
           marginVertical: 5,
           borderRadius: 100,
@@ -45,10 +46,9 @@ drawerContent={(props) => <CustomDrawerContent {...props}/>}
         }
       }}
     >
-      <Drawer.Screen name="Inicio" component={StackNavigator} />
+      <Drawer.Screen name="Inicio"  component={StackNavigator} />
       <Drawer.Screen name="Perfil" component={PerfilScreen} />
       <Drawer.Screen name="Asistente" component={StackNavigatorAsistente} />    
-      <Drawer.Screen name="Lista de Usuarios" component={ListaUsuariosScreen} />
 
 
       
@@ -82,7 +82,7 @@ return (
       />
     </View>
     <DrawerItemList {...props} />
-    <DrawerItem label="Cerrar sesión" onPress={signOutUser} />
+    <DrawerItem label="Cerrar sesión" onPress={signOutUser} labelStyle={{color: 'white'}} />
   </DrawerContentScrollView>
 )
 

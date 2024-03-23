@@ -1,11 +1,12 @@
 import { Medicinas } from "../../domain/entities/medicinas";
 import { Medicinas2 } from "../../domain/entities/medicinas2";
 import { getMedicinasById } from "./get-medicinas-by-id"
+import { getMedicinasByIdTwo } from "./get-medicinas-by-id-term";
 
-export const getMedicinasByIds = async (rxcui: string[]): Promise<Medicinas[]> => {
+export const getMedicinasByIds = async (rxcui: string[]): Promise<Medicinas2[]> => {
    try {
-      const medicinaPromises: Promise<Medicinas>[] = rxcui.map(rxcui => {
-         return getMedicinasById(rxcui);
+      const medicinaPromises: Promise<Medicinas2>[] = rxcui.map(rxcui => {
+         return getMedicinasByIdTwo();
       })
 
       return await Promise.all(medicinaPromises);

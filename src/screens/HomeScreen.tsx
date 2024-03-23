@@ -21,15 +21,15 @@ interface Props extends StackScreenProps<RootStackParams, 'HomeScreen'> {}
 
 export const HomeScreen = ({navigation}:Props) => {
 
-  const {top} = useSafeAreaInsets();
+    const {top} = useSafeAreaInsets();
 
-const {isLoading, data, fetchNextPage} = useInfiniteQuery({
-   queryKey: ['medicinas', 'infinite'],
-   initialPageParam: 0,
-   queryFn: (params) => getMedicinas(params.pageParam),
-   getNextPageParam: (lastPage, pages) => pages.length,
- staleTime: 1000 * 60 * 60,}
- )
+  const {isLoading, data, fetchNextPage} = useInfiniteQuery({
+     queryKey: ['medicinas', 'infinite'],
+     initialPageParam: 0,
+     queryFn: (params) => getMedicinas(params.pageParam.toString()),
+     getNextPageParam: (lastPage, pages) => pages.length,
+   staleTime: 1000 * 60 * 60,}
+   )
 
 
   return (
@@ -39,7 +39,7 @@ const {isLoading, data, fetchNextPage} = useInfiniteQuery({
  <FlatList
  data={data?.pages.flat()??[] }
  keyExtractor={(medicina, index) => `${medicina.rxcui}-${index}`}
- numColumns={1}
+ numColumns={2}
  style={{paddingTop: top + 20}}
  ListHeaderComponent={()=>(
   <Text variant='displayMedium'>Medicinas</Text>

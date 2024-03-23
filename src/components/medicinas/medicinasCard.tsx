@@ -6,9 +6,10 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParams } from '../../navigator/StackNavigator';
 import { medicinasApi } from '../../api/medicinasApi';
 import { globalStyles } from '../../themes/AppThemes';
+import { Medicinas2 } from '../../domain/entities/medicinas2';
 
 interface Props {
-    medicina:Medicinas;
+    medicina:Medicinas2;
 }
 
 export const MedicinaCard = ({medicina}:Props) => {
@@ -29,7 +30,7 @@ const navigation= useNavigation<NavigationProp<RootStackParams>>();
     </View>
     <Text style={{
               color: 'white',
-              fontSize: 20,
+              fontSize: 13,
               fontWeight: 'bold',
               top: 10,
               left: 5,
@@ -39,9 +40,9 @@ const navigation= useNavigation<NavigationProp<RootStackParams>>();
 
     <Text style={{
         color: 'white',
-        fontSize: 20,
+        fontSize: 13,
         fontWeight: 'bold',
-        top: 10,
+        top: 20,
         left: 5,
     }}>
         {medicina.fullName}

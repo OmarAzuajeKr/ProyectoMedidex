@@ -3,7 +3,7 @@ import { View, FlatList, TouchableOpacity, Text } from 'react-native'
 import { globalStyles } from '../themes/AppThemes'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ActivityIndicator, TextInput } from 'react-native-paper'
-import { Medicinas } from '../domain/entities/medicinas'
+//import { Medicinas } from '../domain/entities/medicinas'
 import { MedicinaCard } from '../components/medicinas/medicinasCard'
 import { useQuery } from '@tanstack/react-query'
 import { getMedicinaNamesWithId } from '../actions/medicinas/get-medicinas-with-name'
@@ -13,6 +13,10 @@ import { getMedicinasByIds } from '../actions/medicinas/get-medicinas-by-ids'
 import { useDebouncedValue } from '../hooks/useDebounceValue'
 import { StackScreenProps } from '@react-navigation/stack'
 import { RootStackParams } from '../navigator/StackNavigator'
+import { Medicinas2 } from '../domain/entities/medicinas2'
+//import { getMedicinaNamesWithIdTwo } from '../actions/medicinas/get-medicinas-with-name-'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { getMedicinas } from '../actions/medicinas/get-medicinas'
 
 interface Props extends StackScreenProps<RootStackParams, 'HomeScreen'> {}
 
@@ -22,34 +26,23 @@ export const SearchScreen = ({navigation}:Props) => {
     const [term, setTerm] = useState('');
     const debonceValue = useDebouncedValue(term);
     
-    const {isLoading, data:MedicinaNameList = []} = useQuery ({
-        queryKey: ['medicinas', 'search'],        
-        queryFn: () => getMedicinaNamesWithId(0),
+    const {isLoading, data:MedicinaNameList = []} = useInfiniteQuery({
+        queryKey: ['medicinas', 'infinite'],
+        initialPageParam: 0,
+        queryFn: (params) => getMedicinas(params.pageParam.toString()),
+        getNextPageParam: (lastPage, pages) => pages.length,
         staleTime: 1000 * 60 * 5
     })
-    
-    console.log(MedicinaNameList);
 
     const MedicinaNameIdList = useMemo(() => {
-        if(!isNaN(Number(debonceValue))){
-            const medicina = MedicinaNameList.find(medicina => medicina.id.includes(debonceValue));
-            return medicina? [medicina]: []
-        }
-
-        if (debonceValue.length === 0) return [];
+        if (debonceValue.length === 0) return MedicinaNameList.pages.flat() ?? [];
 
         if (debonceValue.length < 3) return [];
 
-        return MedicinaNameList.filter(medicina => medicina.name.toLowerCase().includes(debonceValue.toLowerCase()));
+        return MedicinaNameList.pages.flat().filter(medicina => 
+            medicina.fullName.toLowerCase().includes(debonceValue.toLowerCase())) ?? [];
 
-    }, [debonceValue])
-
-    const {isLoading:isLoadingMedicinas, data:medicinas = []} = useQuery({
-        queryKey: ['medicinas', 'by', MedicinaNameIdList],
-        queryFn: () => getMedicinasByIds(MedicinaNameIdList.map (medicina => medicina.id)),
-        staleTime: 1000 * 60 * 5,
-        enabled: debonceValue.length >= 3
-    })
+    }, [debonceValue, MedicinaNameList])
 
     if (isLoading){
         return (
@@ -67,14 +60,11 @@ export const SearchScreen = ({navigation}:Props) => {
                 onChangeText={setTerm}
                 value={term}
                 style={{backgroundColor: 'transparent'}}
+                theme={{ colors: { primary: '#c1121f' } }}
             />
 
-            {isLoadingMedicinas && (
-                <ActivityIndicator style={{marginTop: 20}} size={50} color='red'/>
-            )}
-
             <FlatList
-                data={medicinas}
+                data={MedicinaNameIdList}
                 keyExtractor={(medicina,index) => `${medicina.rxcui}-${index}`}
                 numColumns={2}
                 style={{paddingTop: top + 20}}
