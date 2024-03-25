@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { View, Text, Image} from 'react-native';
 import { globalStyles } from '../themes/AppThemes';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../bd/FireBase';
+import { Button } from 'react-native-paper';
 
 export const PerfilScreen = () => {
   const [user, setUser] = useState(null);
@@ -82,12 +82,14 @@ export const PerfilScreen = () => {
                      fontWeight: 'bold',
                      marginBottom: 10}}
               >Identificación:</Text><Text>{user.identification}</Text>
+                <Button style={globalStyles.boton4} mode="contained" onPress={() => console.log('HOla')}> Editar </Button>
             </>
           ) : (
             <Text>Cargando...</Text>
           )
       }
     </View>
+    
     </View>
   );
 };
