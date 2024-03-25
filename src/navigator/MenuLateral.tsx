@@ -16,6 +16,7 @@ import { Text } from 'react-native';
 import { doc, getDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../bd/FireBase';
 import { useEffect, useState } from 'react';
+import { StackNavigatorPerfil } from './StackNavigatorPerfil';
 
 
 
@@ -70,7 +71,7 @@ drawerContent={(props) => <CustomDrawerContent {...props}/>}
 />
 <Drawer.Screen 
     name="Perfil" 
-    component={PerfilScreen} 
+    component={StackNavigatorPerfil} 
     options={{
         drawerIcon: ({focused, size}) => (
             <Image 

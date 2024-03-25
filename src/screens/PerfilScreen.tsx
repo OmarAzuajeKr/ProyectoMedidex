@@ -5,8 +5,12 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../bd/FireBase';
 import { Button } from 'react-native-paper';
+import { RootStackParams4 } from '../navigator/StackNavigatorPerfil';
+import { StackScreenProps } from '@react-navigation/stack';
 
-export const PerfilScreen = () => {
+interface Props extends StackScreenProps<RootStackParams4, 'EditPerfilScreen'> {}
+
+export const PerfilScreen = ({navigation}:Props) => {
   const [user, setUser] = useState(null);
   const auth = FIREBASE_AUTH;
   const [isLoading, setIsLoading] = useState(true);
@@ -82,7 +86,7 @@ export const PerfilScreen = () => {
                      fontWeight: 'bold',
                      marginBottom: 10}}
               >Identificación:</Text><Text>{user.identification}</Text>
-                <Button style={globalStyles.boton4} mode="contained" onPress={() => console.log('HOla')}> Editar </Button>
+                <Button style={globalStyles.boton4} mode="contained" onPress={()=>{navigation.push('EditPerfilScreen')}}> Editar </Button>
             </>
           ) : (
             <Text>Cargando...</Text>
