@@ -76,13 +76,13 @@ return (
         style={{width: 160, height: 160,
         backgroundColor: 'white',
         borderRadius: 20,
-        marginLeft: 30,
+        marginLeft: 20,
         }}
         resizeMode="center"
       />
     </View>
     <DrawerItemList {...props} />
-    <DrawerItem label="Cerrar sesión" onPress={signOutUser} labelStyle={{color: 'white'}} />
+    <DrawerItem label="Cerrar sesión" onPress={signOutUser} labelStyle={{color: 'white', marginLeft:20}} />
   </DrawerContentScrollView>
 )
 

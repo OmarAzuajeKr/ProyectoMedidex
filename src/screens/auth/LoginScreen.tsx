@@ -28,7 +28,6 @@ export const LoginScreen = ({navigation}:Props) => {
       setLoading(true);
       try {
         const response = await signInWithEmailAndPassword(auth, email, password);
-        console.log(response);
     
         // Navega a la pantalla de inicio después de un inicio de sesión exitoso
         navigation.navigate('MenuLateral');
@@ -36,12 +35,16 @@ export const LoginScreen = ({navigation}:Props) => {
         console.error('Error al iniciar sesión: ', error);
         if (error.code === 'auth/user-not-found') {
           alert('No existe una cuenta con este correo electrónico');
+          console.log(error.code)
         } else if (error.code === 'auth/wrong-password') {
           alert('La contraseña es incorrecta');
+          console.log(error.code)
         } else if (error.code === 'auth/invalid-email') {
           alert('El correo electrónico proporcionado no es válido');
+          console.log(error.code)
         } else {
-          alert('Error al iniciar sesión');
+          alert('Credenciales inválidas');
+          console.log(error.code)
         }
       } finally {
         setLoading(false);

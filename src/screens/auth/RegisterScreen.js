@@ -10,6 +10,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../../bd/FireBase';
 
 
+
+
 export const RegisterScreen = () => {
     const navigation = useNavigation();
     const [name, setName] = useState('');
@@ -30,6 +32,12 @@ export const RegisterScreen = () => {
     const saveNewUser = async () => {
       if (!name || !email || !password || !birthdate || !identification) {
         alert("Por favor rellene todos los campos");
+      } else if (password.length < 8) {
+        alert("La contraseña debe tener al menos 8 caracteres");
+      } else if (isNaN(identification)) {
+        alert("Solo puede ingresar números en el campo Cedula");
+      } else if (isNaN(Date.parse(birthdate))) {
+        alert("Ingrese una fecha válida en el campo Fecha de Nacimiento");
       } else {
         try {
           // Registra al usuario con Firebase Authentication
@@ -58,8 +66,6 @@ export const RegisterScreen = () => {
         }
       }
     }
-
-
 
       const handleRegister = () => {
         // Aquí puedes manejar la lógica de registro
@@ -95,20 +101,22 @@ export const RegisterScreen = () => {
                 style={{backgroundColor: 'transparent'}}
                 theme={{ colors: { primary: '#c1121f' } }}
             />
-              <TextInput
-                label="Fecha de Nacimiento"
-                value={birthdate}
-                onChangeText={text => setBirthdate(text)}
-                style={{backgroundColor: 'transparent'}}
-                theme={{ colors: { primary: '#c1121f' } }}
-            />
-              <TextInput
-                label="Cedula"
-                value={identification}
-                onChangeText={text => setIdentification(text)}
-                style={{backgroundColor: 'transparent'}}
-                theme={{ colors: { primary: '#c1121f' } }}
-            />
+          <TextInput
+    label="Fecha de Nacimiento"
+    value={birthdate}
+    onChangeText={text => setBirthdate(text)}
+    style={{backgroundColor: 'transparent'}}
+    theme={{ colors: { primary: '#c1121f' } }}
+    keyboardType="numeric" // Añade esta línea
+/>
+<TextInput
+    label="Cedula"
+    value={identification}
+    onChangeText={text => setIdentification(text)}
+    style={{backgroundColor: 'transparent'}}
+    theme={{ colors: { primary: '#c1121f' } }}
+    keyboardType="numeric" // Añade esta línea
+/>
             <Button style={globalStyles.boton2} mode="contained" onPress={saveNewUser} >
                 Registrarse
             </Button>

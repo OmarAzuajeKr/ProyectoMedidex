@@ -35,14 +35,17 @@ export const SearchScreen = ({navigation}:Props) => {
     })
 
     const MedicinaNameIdList = useMemo(() => {
-        if (debonceValue.length === 0) return MedicinaNameList.pages.flat() ?? [];
-
         if (debonceValue.length < 3) return [];
 
-        return MedicinaNameList.pages.flat().filter(medicina => 
-            medicina.fullName.toLowerCase().includes(debonceValue.toLowerCase())) ?? [];
+        if (MedicinaNameList && 'pages' in MedicinaNameList) {
+            if (debonceValue.length === 0) return MedicinaNameList.pages.flat();
 
-    }, [debonceValue, MedicinaNameList])
+            return MedicinaNameList.pages.flat().filter(medicina => 
+                medicina.fullName.toLowerCase().includes(debonceValue.toLowerCase()));
+        }
+
+        return [];
+    }, [debonceValue, MedicinaNameList]);
 
     if (isLoading){
         return (
