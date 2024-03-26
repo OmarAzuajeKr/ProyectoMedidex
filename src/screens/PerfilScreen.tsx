@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, Image} from 'react-native';
 import { globalStyles } from '../themes/AppThemes';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -7,6 +7,7 @@ import { FIREBASE_AUTH, FIREBASE_DB } from '../../bd/FireBase';
 import { Button } from 'react-native-paper';
 import { RootStackParams4 } from '../navigator/StackNavigatorPerfil';
 import { StackScreenProps } from '@react-navigation/stack';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface Props extends StackScreenProps<RootStackParams4, 'EditPerfilScreen'> {}
 
@@ -15,26 +16,28 @@ export const PerfilScreen = ({navigation}:Props) => {
   const auth = FIREBASE_AUTH;
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setIsLoading(true);
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const docRef = doc(FIREBASE_DB, 'users', user.uid);
-        const docSnap = await getDoc(docRef);
+  useFocusEffect(
+    useCallback(() => {
+      setIsLoading(true);
+      const auth = getAuth();
+      const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const docRef = doc(FIREBASE_DB, 'users', user.uid);
+          const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-          setUser(docSnap.data());
+          if (docSnap.exists()) {
+            setUser(docSnap.data());
+          } else {
+            console.log('No such document!');
+          }
         } else {
-          console.log('No such document!');
+          setUser(null);
         }
-      } else {
-        setUser(null);
-      }
-    });
-    setIsLoading(false);
-    return unsubscribe;
-  }, []);
+      });
+      setIsLoading(false);
+      return unsubscribe;
+    }, [])
+  );
 
   return (
     <View style={{

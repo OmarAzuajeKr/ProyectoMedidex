@@ -4,15 +4,14 @@ import { AsistenteScreen } from '../screens/AsistenteScreen';
 //import { PerfilScreen } from '../screens/PerfilScreen';
 import { ChatAsistenteScreen } from '../screens/ChatAsistenteScreen';
 import { PerfilScreen } from '../screens/PerfilScreen';
-import { EditPerfilScreen } from '../screens/EditPerfilScreen';
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { StackNavigator3 } from './StackNavigatorLogin';
+import { EditPerfilScreen } from '../screens/EditPerfilScreen';
 
 
 export type RootStackParams4 = {
   PerfilScreen: undefined,
 EditPerfilScreen: undefined
-StackNavigator3: undefined
 }
 
 
@@ -38,6 +37,5 @@ export const StackNavigatorPerfil = () => {
     >
       <Stack4.Screen name="PerfilScreen" component={PerfilScreen} />
       <Stack4.Screen name="EditPerfilScreen" component={EditPerfilScreen} />
-      <Stack4.Screen name="StackNavigator3" component={StackNavigator3} />
     </Stack4.Navigator>
   );}

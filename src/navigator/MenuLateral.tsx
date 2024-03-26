@@ -1,22 +1,17 @@
-import { DrawerContent, DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
-import { HomeScreen } from '../screens/HomeScreen';
-import { PerfilScreen } from '../screens/PerfilScreen';
+import {  DrawerContent, DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
 import { StackNavigator } from './StackNavigator';
-import { AsistenteScreen } from '../screens/AsistenteScreen';
-import { ConfiguracionScreen } from '../screens/ConfiguracionScreen';
 import { View, Image } from 'react-native';
 import { StackNavigatorAsistente } from './StackNavigatorAsistente';
-import { LoginScreen } from '../screens/auth/LoginScreen';
-import { StackNavigator3 } from './StackNavigatorLogin';
-import { ListaUsuariosScreen } from '../screens/ListaUsuariosScreen';
 import { getAuth, signOut } from 'firebase/auth';
 import { FIREBASE_AUTH } from '../../bd/FireBase';
 import { DrawerItem } from '@react-navigation/drawer';
 import { Text } from 'react-native';
 import { doc, getDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../bd/FireBase';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback} from 'react';
 import { StackNavigatorPerfil } from './StackNavigatorPerfil';
+import { onSnapshot } from 'firebase/firestore';
+
 
 
 
@@ -103,24 +98,27 @@ drawerContent={(props) => <CustomDrawerContent {...props}/>}
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const [userData, setUserData] = useState(null);
   const auth = getAuth();
-  const user = auth.currentUser;
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         const docRef = doc(FIREBASE_DB, 'users', user.uid);
-        const docSnap = await getDoc(docRef);
+        const unsubscribeSnapshot = onSnapshot(docRef, (doc) => {
+          if (doc.exists()) {
+            setUserData(doc.data());
+          } else {
+            console.log('No such document!');
+          }
+        });
 
-        if (docSnap.exists()) {
-          setUserData(docSnap.data());
-        } else {
-          console.log('No such document!');
-        }
+        // Devuelve una función de limpieza que desuscribe el snapshot al desmontar
+        return unsubscribeSnapshot;
       }
-    };
+    });
 
-    fetchUserData();
-  }, [user]);
+    // Limpiar la suscripción al desmontar el componente
+    return () => unsubscribe();
+  }, []);
 
   const signOutUser = async () => {
     try {

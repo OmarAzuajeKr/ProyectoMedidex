@@ -6,11 +6,6 @@ import { updateProfile } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { globalStyles } from '../themes/AppThemes';
 import { useNavigation } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParams4 } from '../navigator/StackNavigatorPerfil';
-
-interface Props extends StackScreenProps<RootStackParams4, 'EditPerfilScreen'> {}
-
 
 export const EditPerfilScreen = () => {
   const [name, setName] = useState('');
@@ -56,10 +51,6 @@ export const EditPerfilScreen = () => {
     }
   };
 
-  const goBack = () => {
-    navigation.goBack();
-  };
-
   return (
     <View style={{
     marginHorizontal: 20,
@@ -83,9 +74,6 @@ export const EditPerfilScreen = () => {
       />
       <Button style= {globalStyles.boton4} mode='contained' onPress={handleSave}>
         Actualizar
-      </Button>
-      <Button style= {globalStyles.boton4} mode='contained' onPress={goBack}>
-        Volver
       </Button>
     </View>
   );
