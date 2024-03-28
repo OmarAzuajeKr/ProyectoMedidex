@@ -149,10 +149,10 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         }}>Bienvenid@ {userData.name}</Text>}
       </View>
       <DrawerItemList {...props} />
-      <DrawerItem label="Cerrar sesión" onPress={signOutUser} labelStyle={{color: 'white', marginLeft:20}} icon={({focused, size}) => (
+      <DrawerItem label="Cerrar sesión" onPress={signOutUser} labelStyle={{color: 'white', marginLeft:10, marginTop:'180%'}} icon={({focused, size}) => (
     <Image 
       source={focused ? require('../Assets2/OutIconFocused.png') : require('../Assets2/OutIcon.png')}
-      style={{ width: 50, height: 40, marginLeft:-10, marginRight:-50 }} 
+      style={{ width: 50, height: 40, marginLeft:-10, marginRight:-50, marginTop:'133%' }} 
     />
   )} /> 
     </DrawerContentScrollView>

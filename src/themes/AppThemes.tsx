@@ -65,7 +65,9 @@ export const globalStyles = StyleSheet.create({
         marginTop: 20,
         backgroundColor: '#c1121f',
         padding: 10,
-        borderRadius: 30
+        borderRadius: 30,
+        marginLeft: 80,
+        marginRight: 80,
     },
     respuestas:{
         height:60,

@@ -121,7 +121,7 @@ export const RegisterScreen = () => {
                 Registrarse
             </Button>
             <Button style={globalStyles.boton2} mode="contained" onPress={handleGoBack}>
-                Volver a Iniciar Sesión
+                Volver
             </Button>
         </View>
     );

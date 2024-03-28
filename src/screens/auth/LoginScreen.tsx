@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, ActivityIndicator } from 'react-native';
+import { View, Image, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { TextInput, Button,Text } from 'react-native-paper';
 import { globalStyles } from '../../themes/AppThemes';
 import { StackScreenProps} from '@react-navigation/stack';
@@ -96,6 +96,9 @@ export const LoginScreen = ({navigation}:Props) => {
       <Button style={globalStyles.boton3} mode="contained" onPress={()=>{navigation.push('RegisterScreen')}}>
         Registrarse
       </Button>
+      <TouchableOpacity onPress={()=>{navigation.push('RecoverPasswordScreen')}}>
+        <Text style={{color: '#c1121f', textAlign: 'center', marginTop: 10}}>¿Olvidaste tu contraseña?</Text>
+      </TouchableOpacity>
       <Text variant='labelMedium' style={{
         textAlign: 'center',
         marginVertical: 20,

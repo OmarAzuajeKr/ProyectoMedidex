@@ -4,10 +4,11 @@ import { LoginScreen } from '../screens/auth/LoginScreen';
 import { LoadingScreen } from '../screens/loading/LoadingScreen';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { MenuLateral } from './MenuLateral';
+import { RecoverPasswordScreen } from '../screens/auth/RecoverPasswordScreen';
 
 export type RootStackParams3 = {
   LoginScreen: undefined,
-  LoadingScreen: undefined,
+  RecoverPasswordScreen: undefined,
   RegisterScreen: undefined;
   MenuLateral: undefined;
 
@@ -35,8 +36,8 @@ export const StackNavigator3 = () => {
     
     >
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
-      <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+      <Stack.Screen name="RecoverPasswordScreen" component={RecoverPasswordScreen} />
       <Stack.Screen name="MenuLateral" component={MenuLateral} />
     </Stack.Navigator>
   );}
