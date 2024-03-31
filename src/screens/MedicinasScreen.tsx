@@ -6,19 +6,21 @@ import { useQuery } from '@tanstack/react-query'
 import { getMedicinasById } from '../actions/medicinas/get-medicinas-by-id'
 import { FullScreenLoader } from '../components/ui/FullScreenLoader'
 import { Chip, Button } from 'react-native-paper'
-import { Formatter } from '../helpers/formatter'
 import { globalStyles } from '../themes/AppThemes'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ThemeContext } from '../components/context/ThemeContext'
-import { MedicinaFormatter } from '../infraestructure/mappers/medicinaFormatter'
-import { FlatList } from 'react-native-gesture-handler'
-import { PastillaBG } from '../components/ui/pastillaBG'
+import { translateText } from '../api/TraduccionApi';
+
+
 
 interface Props extends StackScreenProps<RootStackParams, 'MedicinasScreen'> { }
 
 export const MedicinasScreen = ({ navigation, route }: Props) => {
   const { isDark } = useContext(ThemeContext);
   const { top } = useSafeAreaInsets();
+
+
+
 
   const handleGoBack = () => {
     navigation.goBack();

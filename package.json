@@ -12,6 +12,7 @@
     "@eva-design/eva": "^2.2.0",
     "@google/generative-ai": "^0.2.1",
     "@react-native-async-storage/async-storage": "^1.22.3",
+    "@react-native-community/datetimepicker": "^7.6.3",
     "@react-native-community/voice": "^1.1.9",
     "@react-native-masked-view/masked-view": "0.3.0",
     "@react-navigation/drawer": "^6.6.11",
@@ -27,13 +28,15 @@
     "firebase": "^10.9.0",
     "react": "18.2.0",
     "react-native": "0.73.4",
+    "react-native-datepicker": "^1.7.2",
     "react-native-elements": "^3.4.3",
     "react-native-gesture-handler": "~2.14.0",
     "react-native-paper": "^5.12.3",
     "react-native-reanimated": "~3.6.2",
     "react-native-svg": "^9.13.6",
     "sweetalert2": "^11.10.7",
-    "typescript": "^5.3.0"
+    "typescript": "^5.3.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

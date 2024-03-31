@@ -27,10 +27,15 @@ export const LoginScreen = ({navigation}:Props) => {
     const signIn = async () => {
       setLoading(true);
       try {
-        const response = await signInWithEmailAndPassword(auth, email, password);
-    
-        // Navega a la pantalla de inicio después de un inicio de sesión exitoso
-        navigation.navigate('MenuLateral');
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        if (user.emailVerified) {
+          // Navega a la pantalla de inicio después de un inicio de sesión exitoso
+          navigation.navigate('MenuLateral');
+        } else {
+          alert('Por favor verifica tu correo electrónico antes de iniciar sesión');
+        }
       } catch (error) {
         console.error('Error al iniciar sesión: ', error);
         if (error.code === 'auth/user-not-found') {
@@ -50,7 +55,6 @@ export const LoginScreen = ({navigation}:Props) => {
         setLoading(false);
       }
     }
-
 
   return (
     <View>

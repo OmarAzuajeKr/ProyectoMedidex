@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { globalStyles } from '../../themes/AppThemes';
-import  firebase  from '../../../bd/FireBase';
-//import { db } from '../../../bd/FireBase';
 import { collection, addDoc, setDoc, doc } from "firebase/firestore"; 
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../../bd/FireBase';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 
@@ -17,9 +16,10 @@ export const RegisterScreen = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [birthdate, setBirthdate] = useState('');
+    const [birthdate, setBirthdate] = useState(new Date());
     const [identification, setIdentification] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showDatePicker, setShowDatePicker] = useState(false);
     const auth = FIREBASE_AUTH;
 
 
@@ -34,7 +34,7 @@ export const RegisterScreen = () => {
         alert("Por favor rellene todos los campos");
       } else if (password.length < 8) {
         alert("La contraseña debe tener al menos 8 caracteres");
-      } else if (isNaN(identification)) {
+      } else if (isNaN(identification.replace(/\./g, ''))) {
         alert("Solo puede ingresar números en el campo Cedula");
       } else if (isNaN(Date.parse(birthdate))) {
         alert("Ingrese una fecha válida en el campo Fecha de Nacimiento");
@@ -44,6 +44,9 @@ export const RegisterScreen = () => {
           const userCredential = await createUserWithEmailAndPassword(auth, email, password);
           const user = userCredential.user;
     
+          // Envía un correo de verificación al usuario
+          await sendEmailVerification(user);
+    
           // Almacena los datos adicionales del usuario en Firestore
           await setDoc(doc(FIREBASE_DB, "users", user.uid), {
             name,
@@ -52,7 +55,7 @@ export const RegisterScreen = () => {
             identification
           });
     
-          alert('Usuario creado correctamente');
+          alert('Usuario creado correctamente. Por favor verifica tu correo electrónico.');
           navigation.goBack();
         } catch (e) {
           console.error('Error al crear el usuario: ', e);
@@ -67,6 +70,11 @@ export const RegisterScreen = () => {
       }
     }
 
+    const formatIdentification = (text) => {
+      let formattedText = text.replace(/\D/g, '');
+      formattedText = formattedText.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      setIdentification(formattedText);
+    };
       const handleRegister = () => {
         // Aquí puedes manejar la lógica de registro
         console.log(username);
@@ -101,22 +109,44 @@ export const RegisterScreen = () => {
                 style={{backgroundColor: 'transparent'}}
                 theme={{ colors: { primary: '#c1121f' } }}
             />
-          <TextInput
-    label="Fecha de Nacimiento"
-    value={birthdate}
-    onChangeText={text => setBirthdate(text)}
-    style={{backgroundColor: 'transparent'}}
-    theme={{ colors: { primary: '#c1121f' } }}
-    keyboardType="numeric" // Añade esta línea
-/>
-<TextInput
+            <TouchableOpacity style={{
+              backgroundColor: '#c1121f',
+              paddingVertical: 10,
+              marginVertical: 10,
+              borderRadius: 5,
+              alignItems: 'center'
+            }} onPress={() => setShowDatePicker(true)}>
+              <Text style={{
+                color: 'white',
+                fontSize: 16,
+                fontWeight: 'bold'
+              }}>Seleccionar fecha de nacimiento</Text>
+            </TouchableOpacity>
+            {birthdate && (
+              <Text>Fecha de nacimiento seleccionada: {birthdate.toLocaleDateString()}</Text>
+            )}
+            {showDatePicker && (
+              <DateTimePicker
+                value={birthdate || new Date()} // Usa new Date() como valor predeterminado si birthdate es null
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) => {
+                  const currentDate = selectedDate || birthdate;
+                  setBirthdate(currentDate);
+                  setShowDatePicker(false); // Oculta el DateTimePicker después de seleccionar una fecha
+                }}
+                style={{backgroundColor: 'transparent'}} // Estiliza el DateTimePicker
+                theme={{ colors: { primary: '#c1121f' } }} // Estiliza el DateTimePicker
+              />
+            )}
+  <TextInput
     label="Cedula"
     value={identification}
-    onChangeText={text => setIdentification(text)}
+    onChangeText={formatIdentification}
     style={{backgroundColor: 'transparent'}}
     theme={{ colors: { primary: '#c1121f' } }}
-    keyboardType="numeric" // Añade esta línea
-/>
+    keyboardType="numeric"
+  />
             <Button style={globalStyles.boton2} mode="contained" onPress={saveNewUser} >
                 Registrarse
             </Button>

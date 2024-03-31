@@ -146,7 +146,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           fontSize: 20,
           marginLeft: 20,
           marginTop: 10,
-        }}>Bienvenid@ {userData.name}</Text>}
+        }}>Bienvenid@, {userData.name}</Text>}
       </View>
       <DrawerItemList {...props} />
       <DrawerItem label="Cerrar sesión" onPress={signOutUser} labelStyle={{color: 'white', marginLeft:10, marginTop:'180%'}} icon={({focused, size}) => (

@@ -285,7 +285,17 @@ padding: 10,
         marginHorizontal: 10,
             marginVertical: 10,
         marginLeft: 10,
-        marginRight:10,
-        
+        marginRight:10,  
+    },
+    botonEdit: {
+        alignItems: 'center',
+        marginTop: 10,
+        backgroundColor: '#c1121f',
+        padding: 10,
+        borderRadius: 20,
+        marginHorizontal: 10,
+            marginVertical: 10,
+        marginLeft: 90,
+        marginRight:90,  
     }
 })

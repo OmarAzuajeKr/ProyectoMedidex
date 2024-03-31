@@ -28,7 +28,7 @@ export const PerfilScreen = ({navigation}:Props) => {
           if (docSnap.exists()) {
             setUser(docSnap.data());
           } else {
-            console.log('No such document!');
+            console.log('No se encontro el documento!');
           }
         } else {
           setUser(null);
@@ -83,7 +83,7 @@ export const PerfilScreen = ({navigation}:Props) => {
                      fontSize: 20,
                      fontWeight: 'bold',
                      marginBottom: 10
-              }}>Fecha de nacimiento:</Text><Text>{user.birthdate}</Text>
+              }}>Fecha de nacimiento:</Text><Text>{user.birthdate.toDate().toLocaleDateString()}</Text>
               <Text style={{
                      fontSize: 20,
                      fontWeight: 'bold',
