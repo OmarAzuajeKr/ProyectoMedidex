@@ -132,29 +132,39 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
 
   return (
     <DrawerContentScrollView>
-      <View style={{backgroundColor: '#c1121f', padding: 20}}>
-        <Image
-          source={require('../Assets2/Logotipo 2.png')}
-          style={{width: 160, height: 160,
-          backgroundColor: 'white',
-          borderRadius: 20,
-          marginLeft: 20,
-          }}
-          resizeMode="center"
-        />
-         {userData && <Text style={{color: 'white',
-          fontSize: 20,
-          marginLeft: 20,
-          marginTop: 10,
-        }}>Bienvenid@, {userData.name}</Text>}
+      <View style={{flex:1}}>
+        <View style={{backgroundColor: '#c1121f', padding: 20}}>
+          <Image
+            source={require('../Assets2/Logotipo 2.png')}
+            style={{width: 160, height: 160,
+            backgroundColor: 'white',
+            borderRadius: 20,
+            marginLeft: 20,
+            }}
+            resizeMode="center"
+          />
+          {userData && <Text style={{color: 'white',
+            fontSize: 20,
+            marginLeft: 20,
+            marginTop: 10,
+          }}>Bienvenid@, {userData.name}</Text>}
+        </View>
+        <View style={{flex: 1, justifyContent: 'space-between'}}>
+          <DrawerItemList {...props} />
+          <DrawerItem
+            label="Cerrar sesión"
+            onPress={signOutUser}
+            labelStyle={{color: 'white', marginLeft:10}}
+            style={{marginBottom: 60, marginTop: 280, marginLeft: 10, backgroundColor: '#c1121f'}}
+            icon={({focused, size}) => (
+              <Image 
+                source={focused ? require('../Assets2/OutIconFocused.png') : require('../Assets2/OutIcon.png')}
+                style={{ width: 50, height: 40, marginLeft:-10, marginRight:-50 }} 
+              />
+            )}
+          />
+        </View>
       </View>
-      <DrawerItemList {...props} />
-      <DrawerItem label="Cerrar sesión" onPress={signOutUser} labelStyle={{color: 'white', marginLeft:10, marginTop:'180%'}} icon={({focused, size}) => (
-    <Image 
-      source={focused ? require('../Assets2/OutIconFocused.png') : require('../Assets2/OutIcon.png')}
-      style={{ width: 50, height: 40, marginLeft:-10, marginRight:-50, marginTop:'133%' }} 
-    />
-  )} /> 
     </DrawerContentScrollView>
   )
 

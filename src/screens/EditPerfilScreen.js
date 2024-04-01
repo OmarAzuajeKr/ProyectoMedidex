@@ -9,14 +9,16 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Timestamp } from 'firebase/firestore';
+import { ActivityIndicator } from 'react-native';
 
 export const EditPerfilScreen = () => {
   const [name, setName] = useState('');
   const [birthdate, setBirthdate] = useState(new Date());
   const [identification, setIdentification] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
 
+  const navigation = useNavigation();
 
   useEffect(() => {
     const loadUserData = async () => {
@@ -53,6 +55,7 @@ export const EditPerfilScreen = () => {
     } else if (isNaN(Date.parse(birthdate))) {
       alert("Ingrese una fecha válida en el campo Fecha de Nacimiento");
     } else if (user) {
+      setLoading(true); // Comienza la carga
       try {
         await updateProfile(user, {
           displayName: name,
@@ -66,6 +69,8 @@ export const EditPerfilScreen = () => {
         navigation.goBack();
       } catch (error) {
         console.error("Error al actualizar el perfil: ", error);
+      } finally {
+        setLoading(false); // Termina la carga
       }
     }
   };
@@ -122,6 +127,7 @@ export const EditPerfilScreen = () => {
         Actualizar
       </Button>
       <Button style= {globalStyles.botonEdit} mode='contained' onPress={() => navigation.goBack()}>Volver</Button>
+      {loading && <ActivityIndicator size="large" color="red" />}
     </View>
   );
 };

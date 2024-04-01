@@ -6,6 +6,7 @@ import { globalStyles } from '../../themes/AppThemes';
 import { collection, addDoc, setDoc, doc } from "firebase/firestore"; 
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../../bd/FireBase';
+import { ActivityIndicator } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 
@@ -30,6 +31,7 @@ export const RegisterScreen = () => {
     };
 
     const saveNewUser = async () => {
+      setLoading(true); // Comienza la carga
       if (!name || !email || !password || !birthdate || !identification) {
         alert("Por favor rellene todos los campos");
       } else if (password.length < 8) {
@@ -43,10 +45,10 @@ export const RegisterScreen = () => {
           // Registra al usuario con Firebase Authentication
           const userCredential = await createUserWithEmailAndPassword(auth, email, password);
           const user = userCredential.user;
-    
+
           // Envía un correo de verificación al usuario
           await sendEmailVerification(user);
-    
+
           // Almacena los datos adicionales del usuario en Firestore
           await setDoc(doc(FIREBASE_DB, "users", user.uid), {
             name,
@@ -54,7 +56,7 @@ export const RegisterScreen = () => {
             birthdate,
             identification
           });
-    
+
           alert('Usuario creado correctamente. Por favor verifica tu correo electrónico.');
           navigation.goBack();
         } catch (e) {
@@ -63,13 +65,16 @@ export const RegisterScreen = () => {
             alert('El correo electrónico ya está en uso');
           } else if (e.code === 'auth/invalid-email') {
             alert('El correo electrónico proporcionado no es válido');
+          } else if (e.code === 'auth/user-not-found') {
+            alert('El correo electrónico no existe');
           } else {
             alert('Error al crear el usuario');
           }
+        } finally {
+          setLoading(false); // Termina la carga
         }
       }
     }
-
     const formatIdentification = (text) => {
       let formattedText = text.replace(/\D/g, '');
       formattedText = formattedText.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -86,6 +91,7 @@ export const RegisterScreen = () => {
             marginVertical: 30,
             marginTop: '50%'
         }}>
+          {loading && <ActivityIndicator size="large" color="#c1121f" />}
 <Text variant='displayMedium'>Registro</Text>
             <TextInput
                 label="Nombre de usuario"
