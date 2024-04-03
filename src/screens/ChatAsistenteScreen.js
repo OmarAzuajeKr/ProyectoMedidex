@@ -7,35 +7,43 @@ import { globalStyles } from "../themes/AppThemes";
 import { Image } from "react-native";
 import Voice from '@react-native-community/voice';
 
+const Message = ({ item }) => {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  const handlePress = () => {
+    if (isSpeaking) {
+      Speech.stop();
+    } else {
+      Speech.speak(item.text);
+    }
+    setIsSpeaking(!isSpeaking);
+  };
+
+  return (
+    <View style={[globalStyles.messageContainer, item.user ? globalStyles.userMessageContainer : globalStyles.aiMessageContainer]}>
+      {!item.user && <Image source={require('../Assets2/mascota.png')} style={globalStyles.aiImage}  resizeMode="center" />}
+      <Text style={[globalStyles.messageText, item.user && globalStyles.userMessage]}>
+        {item.text}
+      </Text>
+      {!item.user && (
+        <TouchableOpacity onPress={handlePress}>
+          <Text>Escuchar</Text>
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+};
 
 export const ChatAsistenteScreen = () => {
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [text, setText] = useState('');
+  const flatListRef = React.useRef();
 
   const API_KEY = "AIzaSyDLhjtbv3jY17f22byWccqerfYTtYe_QPg";
 
-/*   useEffect(() => {
-    Voice.onSpeechResults = onSpeechResults;
-    return () => {
-      Voice.destroy().then(Voice.removeAllListeners);
-    };
-  }, []);
-
-  const onSpeechResults = (e) => {
-    setUserInput(e.value[0]);
-  };
-
-  const toggleSpeech = async () => {
-    if (isSpeaking) {
-      await Voice.stop();
-    } else {
-      await Voice.start('es-ES');
-    }
-    setIsSpeaking(!isSpeaking);
-  };
- */
   useEffect(() => {
     const startChat = async () => {
       const genAI = new GoogleGenerativeAI.GoogleGenerativeAI(API_KEY);
@@ -71,44 +79,24 @@ export const ChatAsistenteScreen = () => {
     setLoading(false);
     setUserInput("");
 
-    /* if (text) {
+    if (text) {
       Speech.speak(text);
-    } */
+    } 
     console.log(messages,2);
   };
 
-
-
-  const renderMessage = ({ item }) => (
-    <View style={[globalStyles.messageContainer, item.user ? globalStyles.userMessageContainer : globalStyles.aiMessageContainer]}>
-       {!item.user && <Image source={require('../Assets2/mascota.png')} style={globalStyles.aiImage}  resizeMode="center" />}
-      
-      <Text style={[globalStyles.messageText, item.user && globalStyles.userMessage]}>
-        {item.text}
-      </Text>
-    </View>
-  );
+  const renderMessage = ({ item }) => <Message item={item} />;
 
   return (
     <View style={globalStyles.container4}>
-      <FlatList
-        data={messages}
-        renderItem={renderMessage}
-        keyExtractor={(item, i) => item.text + i}
-      />
+     <FlatList
+  ref={flatListRef}
+  onContentSizeChange={() => flatListRef.current.scrollToEnd()}
+  data={messages}
+  renderItem={renderMessage}
+  keyExtractor={(item, i) => item.text + i}
+/>
       <View style={globalStyles.inputContainer}>
-        {/* microphone icon */}
-        <TouchableOpacity style={globalStyles.micIcon}>
-          <FontAwesome
-            name="microphone"
-            size={24}
-            color="black"
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          />
-        </TouchableOpacity>
         <TextInput
           placeholder="Escribe un mensaje..."
           onChangeText={setUserInput}
@@ -136,6 +124,3 @@ export const ChatAsistenteScreen = () => {
     </View>
   );
 };
-
-
-  

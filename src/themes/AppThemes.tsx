@@ -297,5 +297,8 @@ padding: 10,
             marginVertical: 10,
         marginLeft: 90,
         marginRight:90,  
-    }
+    },
+    boldText: {
+        fontWeight: 'bold',
+      }
 })
